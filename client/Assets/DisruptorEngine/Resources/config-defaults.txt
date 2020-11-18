@@ -1,0 +1,6 @@
+{
+    "cid": "1295496315595814",
+    "pid": "DE_1295496315595815",
+    "platform": "https://api.beamable.com",
+    "socket": "https://api.beamable.com"
+}
