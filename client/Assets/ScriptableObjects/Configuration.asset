@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Configuration
   m_EditorClassIdentifier: 
   _introSceneName: 1.Intro
-  _gameCASceneName: 2.Game (Client Authoritative)
-  _gameSASceneName: 3.Game (Server Authoritative)
+  _gameSceneName: 2.Game
+  _leaderboardSceneName: 3.Leaderboard
   _delayBeforeLoadScene: 0.5
+  _treeViewRotationMin: {x: 0, y: 0.25, z: 0}
+  _treeViewRotationMax: {x: 0, y: 0.5, z: 0}
   _delay1BeforeAttack: 0.1
   _delay2BeforeBackswing: 0.25
   _delay3BeforeForeswing: 1

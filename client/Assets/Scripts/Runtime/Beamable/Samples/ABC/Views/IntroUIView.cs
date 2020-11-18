@@ -4,6 +4,7 @@ using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ namespace Beamable.Samples.ABC.Views
    /// <summary>
    /// Handles the view concerns for the intro scene UI elements.
    /// </summary>
-   public class IntroUI : MonoBehaviour
+   public class IntroUIView : MonoBehaviour
    {
       //  Properties -----------------------------------
       public string AboutBodyText
@@ -25,15 +26,21 @@ namespace Beamable.Samples.ABC.Views
 
       public CanvasGroup MenuCanvasGroup {  get { return _menuCanvasGroup; } }
 
+      [HideInInspector]
+      public UnityEvent OnViewLeaderboardButtonClicked = new UnityEvent();
+
+      [HideInInspector]
+      public UnityEvent OnStartGameButtonClicked = new UnityEvent();
+
       //  Fields ---------------------------------------
       [SerializeField]
       private Configuration _configuration = null;
 
       [SerializeField]
-      private Button _startGameCAButton = null;
+      private Button _viewLeaderboardButton = null;
 
       [SerializeField]
-      private Button _startGameSAButton = null;
+      private Button _startGameButton = null;
 
       [SerializeField]
       private CanvasGroup _logoCanvasGroup = null;
@@ -51,8 +58,8 @@ namespace Beamable.Samples.ABC.Views
       //  Unity Methods   ------------------------------
       protected void Start()
       {
-         _startGameCAButton.onClick.AddListener(StartGameCAButton_OnClicked);
-         _startGameSAButton.onClick.AddListener(StartGameSAButton_OnClicked);
+         _viewLeaderboardButton.onClick.AddListener(ViewLeaderboardButton_OnClicked);
+         _startGameButton.onClick.AddListener(StartGameButton_OnClicked);
 
          //
          _logoCanvasGroup.DOFade(0, 0);
@@ -67,11 +74,12 @@ namespace Beamable.Samples.ABC.Views
          _menuCanvasGroup.DOFade(1, 1).SetDelay(0.50f);
       }
 
+
       //  Other Methods --------------------------------
       private IEnumerator LoadScene(string sceneName)
       {
-         _startGameCAButton.interactable = false;
-         _startGameSAButton.interactable = false;
+         _viewLeaderboardButton.interactable = false;
+         _startGameButton.interactable = false;
 
          SoundManager.Instance.PlayAudioClip(SoundConstants.Click01);
 
@@ -79,15 +87,17 @@ namespace Beamable.Samples.ABC.Views
          SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
       }
 
+
       //  Event Handlers -------------------------------
-      private void StartGameCAButton_OnClicked()
+      private void ViewLeaderboardButton_OnClicked()
       {
-         StartCoroutine(LoadScene(_configuration.GameCASceneName));
+         OnViewLeaderboardButtonClicked.Invoke();
       }
 
-      private void StartGameSAButton_OnClicked()
+
+      private void StartGameButton_OnClicked()
       {
-         StartCoroutine(LoadScene(_configuration.GameSASceneName));
+         OnStartGameButtonClicked.Invoke();
       }
    }
 }

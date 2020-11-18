@@ -44,7 +44,7 @@ namespace Beamable.Samples.ABC
             if (isConnected)
             {
                text += ABCHelper.GameInstructionsText;
-               text += "<color=#17B0A8>";
+               text += "<color=#9A9A9A>";
                text += $"Connected as '{dbid}'.";
                text += "</color>";
             }
@@ -72,11 +72,10 @@ namespace Beamable.Samples.ABC
          {
             string text = "";
 
-            text += "The Hero has reached the dungeon. Battle the Boss to win." + "\n\n";
+            text += "Button clicks grow trees. Click as many times as possible within the time limit." + "\n\n";
 
-            text += "This demo game showcases Beamable's Microservices</link></u> feature " +
-               "which allows game makers to create and deploy server-authoritative C# functionality " +
-               "within their games." + "\n\n";
+            text += "This demo game showcases Beamable's Multiplayer feature " +
+               "which allows game makers to create real-time and turn-based multi-user game experiences.\n\n";
 
             text += ABCHelper.GetBulletList("Resources", new List<string> {
                "Beamable's <u><link=http://docs.beamable.com>Documentation</link></u>",

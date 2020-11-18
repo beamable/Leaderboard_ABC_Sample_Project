@@ -1,6 +1,5 @@
 ﻿using Beamable.Samples.ABC.Data;
-using DG.Tweening;
-using System.Collections;
+using Beamable.Samples.ABC.Views;
 using UnityEngine;
 
 namespace Beamable.Samples.ABC
@@ -13,16 +12,14 @@ namespace Beamable.Samples.ABC
    {
       //  Fields ---------------------------------------
       [SerializeField]
+      private TreeView _treeView = null;
+
+      [SerializeField]
       private Configuration _configuration = null;
-
-      private int _bossHealth = 0;
-
 
       //  Unity Methods   ------------------------------
       protected void Start ()
       {
-         //
-         _bossHealth = 100;
       }
 
       //  Other Methods --------------------------------

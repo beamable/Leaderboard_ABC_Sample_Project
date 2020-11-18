@@ -18,15 +18,23 @@ namespace Beamable.Samples.ABC.Data
 
       //  Properties -----------------------------------
       public string IntroSceneName { get { return _introSceneName; } }
-      public string GameCASceneName { get { return _gameCASceneName; } }
-      public string GameSASceneName { get { return _gameSASceneName; } }
+      public string GameSceneName { get { return _gameSceneName; } }
+      public string LeaderboardSceneName { get { return _leaderboardSceneName; } }
       public float DelayBeforeLoadScene { get { return _delayBeforeLoadScene; } }
+
+      //
+      public Vector3 TreeViewRotationMin { get { return _treeViewRotationMin; } }
+      public Vector3 TreeViewRotationMax { get { return _treeViewRotationMax; } }
+
+      //
 
       public float Delay1BeforeAttack { get { return _delay1BeforeAttack; } }
       public float Delay2BeforeBackswing { get { return _delay2BeforeBackswing; } }
       public float Delay3BeforeForeswing { get { return _delay3BeforeForeswing; } }
       public float Delay4BeforeTakeDamage { get { return _delay4BeforeTakeDamage; } }
       public float Delay5BeforePointsView { get { return _delay5BeforePointsView; } }
+
+
 
       //  Fields ---------------------------------------
 
@@ -35,14 +43,20 @@ namespace Beamable.Samples.ABC.Data
       private string _introSceneName = "";
 
       [SerializeField]
-      private string _gameCASceneName = "";
+      private string _gameSceneName = "";
 
       [SerializeField]
-      private string _gameSASceneName = "";
+      private string _leaderboardSceneName = "";
 
       [SerializeField]
       private float _delayBeforeLoadScene = 0;
 
+      [Header("Cosmetic")]
+      [SerializeField]
+      private Vector3 _treeViewRotationMin = new Vector3(0, 0.5f, 0);
+
+      [SerializeField]
+      private Vector3 _treeViewRotationMax = new Vector3(0, 1f, 0);
 
       [Header("Attack")]
       [SerializeField]
