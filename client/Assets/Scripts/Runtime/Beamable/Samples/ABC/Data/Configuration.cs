@@ -25,15 +25,14 @@ namespace Beamable.Samples.ABC.Data
       //
       public Vector3 TreeViewRotationMin { get { return _treeViewRotationMin; } }
       public Vector3 TreeViewRotationMax { get { return _treeViewRotationMax; } }
-
+      public float TotalClicksMin { get { return _totalClicksMin; } }
+      public float TotalClicksMax { get { return _totalClicksMax; } }
       //
-
       public float Delay1BeforeAttack { get { return _delay1BeforeAttack; } }
       public float Delay2BeforeBackswing { get { return _delay2BeforeBackswing; } }
       public float Delay3BeforeForeswing { get { return _delay3BeforeForeswing; } }
       public float Delay4BeforeTakeDamage { get { return _delay4BeforeTakeDamage; } }
       public float Delay5BeforePointsView { get { return _delay5BeforePointsView; } }
-
 
 
       //  Fields ---------------------------------------
@@ -57,6 +56,12 @@ namespace Beamable.Samples.ABC.Data
 
       [SerializeField]
       private Vector3 _treeViewRotationMax = new Vector3(0, 1f, 0);
+
+      [SerializeField]
+      private float _totalClicksMin = 0;
+
+      [SerializeField]
+      private float _totalClicksMax = 25;
 
       [Header("Attack")]
       [SerializeField]

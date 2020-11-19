@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -153,7 +153,7 @@ MonoBehaviour:
   _introUIView: {fileID: 544876672}
   _configuration: {fileID: 11400000, guid: 28e7b012a002a51458322ba2fc05964d, type: 2}
   _leaderboardRef:
-    Id: leaderboards.Leaderboard_ABC
+    Id: leaderboards.LeaderboardABC
 --- !u!4 &84596934
 Transform:
   m_ObjectHideFlags: 0
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fbac6013f45e0449af862c8538c63a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &652422254
+--- !u!1 &789250109
 GameObject:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -395,8 +395,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 652422256}
-  - component: {fileID: 652422255}
+  - component: {fileID: 789250111}
+  - component: {fileID: 789250110}
   m_Layer: 0
   m_Name: UndoProRecords
   m_TagString: Untagged
@@ -404,13 +404,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &652422255
+--- !u!114 &789250110
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652422254}
+  m_GameObject: {fileID: 789250109}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f9eb70e479f547f2bb99bde5281612c, type: 3}
@@ -426,18 +426,29 @@ MonoBehaviour:
     - Selection Change
     - Selection Change
     - Selection Change
-    - ' Drag Instantiate'
     - Selection Change
-    - ' Drag Instantiate'
-    - SoundManager Parenting
-    - SoundManager Parenting
---- !u!4 &652422256
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+--- !u!4 &789250111
 Transform:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652422254}
+  m_GameObject: {fileID: 789250109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}

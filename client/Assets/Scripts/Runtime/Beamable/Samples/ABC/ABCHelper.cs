@@ -2,6 +2,9 @@
 using UnityEngine;
 using DG.Tweening;
 using System;
+using System.Collections;
+using Beamable.Samples.ABC.Audio;
+using UnityEngine.SceneManagement;
 
 namespace Beamable.Samples.ABC
 {
@@ -11,6 +14,16 @@ namespace Beamable.Samples.ABC
    public static class ABCHelper
    {
       //  Other Methods --------------------------------
+
+      public static IEnumerator LoadScene(string sceneName, float delayBeforeLoading)
+      {
+        
+
+         SoundManager.Instance.PlayAudioClip(SoundConstants.Click01);
+
+         yield return new WaitForSeconds(delayBeforeLoading);
+         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+      }
 
       public static string GetAttackMissedText()
       {
