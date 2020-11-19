@@ -28,7 +28,7 @@ namespace Beamable.Samples.ABC.Data
       public float TotalClicksMin { get { return _totalClicksMin; } }
       public float TotalClicksMax { get { return _totalClicksMax; } }
       //
-      public float Delay1BeforeAttack { get { return _delay1BeforeAttack; } }
+      public float DelayFadeInUI { get { return _delayFadeInUI; } }
       public float Delay2BeforeBackswing { get { return _delay2BeforeBackswing; } }
       public float Delay3BeforeForeswing { get { return _delay3BeforeForeswing; } }
       public float Delay4BeforeTakeDamage { get { return _delay4BeforeTakeDamage; } }
@@ -47,26 +47,29 @@ namespace Beamable.Samples.ABC.Data
       [SerializeField]
       private string _leaderboardSceneName = "";
 
+      [Header("Cosmetic Delays")]
       [SerializeField]
       private float _delayBeforeLoadScene = 0;
 
-      [Header("Cosmetic")]
+      [SerializeField]
+      private float _delayFadeInUI = 0.25f;
+
+      [Header("Cosmetic Animation")]
       [SerializeField]
       private Vector3 _treeViewRotationMin = new Vector3(0, 0.5f, 0);
 
       [SerializeField]
       private Vector3 _treeViewRotationMax = new Vector3(0, 1f, 0);
 
+      [Header("Data")]
       [SerializeField]
       private float _totalClicksMin = 0;
 
       [SerializeField]
       private float _totalClicksMax = 25;
 
-      [Header("Attack")]
-      [SerializeField]
-      private float _delay1BeforeAttack = 0;
 
+      //TODO: Remove below?
       [SerializeField]
       private float _delay2BeforeBackswing = 0;
 

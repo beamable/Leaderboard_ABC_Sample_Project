@@ -57,9 +57,11 @@ namespace Beamable.Samples.ABC
             if (isConnected)
             {
                text += ABCHelper.GameInstructionsText;
-               text += "<color=#9A9A9A>";
-               text += $"Connected as '{dbid}'.";
-               text += "</color>";
+               text += ABCHelper.GetBulletList("Status", new List<string>
+               {
+                  $"Connected: {true}",
+                  $"DBID: {dbid}", 
+               });
             }
             else
             {
@@ -90,10 +92,12 @@ namespace Beamable.Samples.ABC
             text += "This demo game showcases Beamable's Multiplayer feature " +
                "which allows game makers to create real-time and turn-based multi-user game experiences.\n\n";
 
-            text += ABCHelper.GetBulletList("Resources", new List<string> {
-               "Beamable's <u><link=http://docs.beamable.com>Documentation</link></u>",
-               "<link=https://docs.beamable.com/docs/microservices>Microservices</link></u>"
-            }); ;
+            text += ABCHelper.GetBulletList("Resources", new List<string> 
+            {
+               "Overview: <u><link=https://docs.beamable.com/>docs.beamable.com</link></u>",
+               "Feature: <u><link=https://docs.beamable.com/docs/leaderboard-flow>Leaderboard Flow</link></u>",
+               "Feature: <u><link=https://docs.beamable.com/docs/stats>Stats</link></u>"
+            });
 
 
             return text;
@@ -116,6 +120,16 @@ namespace Beamable.Samples.ABC
          }
       }
 
+      /// <summary>
+      /// Convert the <see cref="double"/> to a whole number like an <see cref="int"/>.
+      /// </summary>
+      /// <param name="score"></param>
+      /// <returns></returns>
+      public static double GetRoundedScore(double score)
+      {
+         return (int)score;
+      }
+
       private static string BeamableSDKInstallInstructionsText
       {
          get
@@ -136,7 +150,7 @@ namespace Beamable.Samples.ABC
       {
          string text = "";
          text += $"{title}" + "\n";
-         text += "<indent=5%>" + "\n";
+         text += "<indent=5%>";
          foreach (string item in items)
          {
             text += $"• {item}" + "\n";

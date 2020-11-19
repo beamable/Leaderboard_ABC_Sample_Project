@@ -61,7 +61,6 @@ namespace Beamable.Samples.ABC.Views
          if (lensDistortion != null)
          {
             lensDistortion.intensity.value = _intensity;
-            Debug.Log("set to : " + lensDistortion.intensity.value);
          }
 
       }

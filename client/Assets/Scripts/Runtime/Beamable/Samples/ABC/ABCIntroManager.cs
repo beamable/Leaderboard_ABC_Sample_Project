@@ -1,11 +1,11 @@
 ﻿using Beamable.Samples.ABC.Audio;
 using Beamable.Samples.ABC.Data;
 using Beamable.Samples.ABC.Views;
-using Core.Platform.SDK;
 using Core.Platform.SDK.Leaderboard;
 using Core.Platform.SDK.Stats;
 using DisruptorBeam;
 using DisruptorBeam.Content;
+using DisruptorBeam.Stats;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +30,9 @@ namespace Beamable.Samples.ABC
       private LeaderboardRef _leaderboardRef = null;
 
       [SerializeField]
-      private GameProgressRef _gameProgressRef = null;
+      private StatBehaviour _highScoreStatBehaviour = null;
 
-      private long _dbid = 0;
+      private IDisruptorEngine _disruptorEngine = null;
       private bool _isConnected = false;
       private bool _isBeamableSDKInstalled = false;
       private string _isBeamableSDKInstalledErrorMessage = "";
@@ -41,8 +41,8 @@ namespace Beamable.Samples.ABC
       protected void Start()
       {
          _introUIView.AboutBodyText = "";
-         _introUIView.OnStartGameButtonClicked.AddListener(IntroUIView_OnStartGameButtonClicked);
-         _introUIView.OnViewLeaderboardButtonClicked.AddListener(IntroUIView_OnViewLeaderboardButtonClicked);
+         _introUIView.StartGameButton.onClick.AddListener(StartGameButton_OnClicked);
+         _introUIView.ViewLeaderboardButton.onClick.AddListener(ViewLeaderboardButton_OnClicked);
          SetupBeamable();
       }
 
@@ -51,6 +51,7 @@ namespace Beamable.Samples.ABC
       {
          DisruptorEngine.Instance.Then(de =>
          {
+            _disruptorEngine = null;
             de.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
          });
       }
@@ -63,28 +64,31 @@ namespace Beamable.Samples.ABC
       /// </summary>
       private void SetupBeamable()
       {
-         try
+
+         // Attempt Connection to Beamable
+         DisruptorEngine.Instance.Then(de =>
          {
-            // Attempt Connection to Beamable
-            DisruptorEngine.Instance.Then(de =>
+            try
             {
-               // Fetch user information
-               _dbid = de.User.id;
+               _disruptorEngine = de;
                _isBeamableSDKInstalled = true;
+
                // Handle any changes to the internet connectivity
-               de.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
-               ConnectivityService_OnConnectivityChanged(de.ConnectivityService.HasConnectivity);
+               _disruptorEngine.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
+               ConnectivityService_OnConnectivityChanged(_disruptorEngine.ConnectivityService.HasConnectivity);
 
-               PopulateLeaderboardWithMockData(de.LeaderboardService);
-               PopulateStats(de.Stats, de.LeaderboardService);
+               PopulateLeaderboardWithMockData(_disruptorEngine.LeaderboardService);
+               PopulateStats(_disruptorEngine.Stats, _disruptorEngine.LeaderboardService);
 
-            });
-         }
-         catch (Exception e)
-         {
-            _isBeamableSDKInstalledErrorMessage = e.Message;
-            ConnectivityService_OnConnectivityChanged(false);
-         }
+            }
+            catch (Exception e)
+            {
+               // Failed to connect (e.g. not logged in)
+               _isBeamableSDKInstalled = false;
+               _isBeamableSDKInstalledErrorMessage = e.Message;
+               ConnectivityService_OnConnectivityChanged(false);
+            }
+         });
       }
 
       private async void PopulateStats(StatsService statsService, LeaderboardService leaderboardService)
@@ -104,34 +108,16 @@ namespace Beamable.Samples.ABC
             Debug.Log($"highScoreRankEntry()1 r={highScoreRankEntry.rank} score={highScore}");
          }
 
-         //TODO: LEARN TO SET THE STATS, GET THE STATS
-         GameProgress gameProgress = await _gameProgressRef.Resolve();
-         await statsService.SetStats(gameProgress.Id, new Dictionary<string, string> ()
-         {
-            { GameProgress.HighScoreKey, highScore.ToString() },
-            { GameProgress.CurrentScoreKey, "0" },
-         });
+         // Set stat values to start a fresh game
+         highScore = ABCHelper.GetRoundedScore(highScore);
+         _highScoreStatBehaviour.SetCurrentValue(highScore.ToString());
+
       }
 
       private async void PopulateLeaderboardWithMockData(LeaderboardService leaderboardService)
       {
          LeaderboardContent leaderboardContent = await _leaderboardRef.Resolve();
-         LeaderBoardView leaderboardView = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
-
-         Debug.Log($"SetupBeamableLeaderboard()1 c={leaderboardView.boardsize}");
-
-         int targetItemCount = 10;
-         if (leaderboardView.boardsize < targetItemCount)
-         {
-            int itemsToCreate = targetItemCount - (int)leaderboardView.boardsize;
-            for (int i = 0; i < itemsToCreate; i++)
-            {
-               await leaderboardService.SetScore(leaderboardContent.Id, 
-                  UnityEngine.Random.Range(_configuration.TotalClicksMin, _configuration.TotalClicksMax));
-            }
-         }
-         LeaderBoardView leaderboardView2 = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
-         Debug.Log($"SetupBeamableLeaderboard()2 c={leaderboardView2.boardsize}");
+         ABCMockDataCreator.PopulateLeaderboardWithMockData(_disruptorEngine, leaderboardContent, _configuration);
       }
 
       /// <summary>
@@ -139,9 +125,15 @@ namespace Beamable.Samples.ABC
       /// </summary>
       private void RenderUI()
       {
+         long dbid = 0;
+         if (_isConnected)
+         {
+            dbid = _disruptorEngine.User.id;
+         }
+
          string aboutBodyText = ABCHelper.GetIntroAboutBodyText(
             _isConnected, 
-            _dbid, 
+            dbid, 
             _isBeamableSDKInstalled, 
             _isBeamableSDKInstalledErrorMessage);
 
@@ -157,7 +149,7 @@ namespace Beamable.Samples.ABC
       }
 
 
-      private void IntroUIView_OnViewLeaderboardButtonClicked()
+      private void ViewLeaderboardButton_OnClicked()
       {
          _introUIView.MenuCanvasGroup.interactable = false;
 
@@ -166,7 +158,7 @@ namespace Beamable.Samples.ABC
       }
 
 
-      private void IntroUIView_OnStartGameButtonClicked()
+      private void StartGameButton_OnClicked()
       {
          _introUIView.MenuCanvasGroup.interactable = false;
 

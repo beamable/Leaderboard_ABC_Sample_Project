@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace Beamable.Samples.ABC.Core
@@ -14,10 +15,16 @@ namespace Beamable.Samples.ABC.Core
       [SerializeField]
       private TextMeshProUGUI _textMesh = null;
 
+      //  Unity Methods -------------------------------
+      protected void Start()
+      {
+         Assert.IsNotNull(_textMesh);
+      }
+
       //  Event Handlers -------------------------------
       public void OnPointerClick(PointerEventData eventData)
       {
-         int linkIndex = TMP_TextUtilities.FindIntersectingLink(_textMesh, Input.mousePosition, null);
+         int linkIndex = TMP_TextUtilities.FindIntersectingLink(_textMesh, Input.mousePosition, Camera.main);
          if (linkIndex != -1)
          {
             TMP_LinkInfo linkInfo = _textMesh.textInfo.linkInfo[linkIndex];

@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21176472, g: 0.21176472, b: 0.21176472, a: 1}
+  m_Color: {r: 0.21960786, g: 0.2627451, b: 0.19607845, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.03137255, g: 0.6627451, b: 0.039215688, a: 1}
+  m_Color: {r: 0.24705884, g: 0.5529412, b: 0.10588236, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 2147564665580255336}
   - component: {fileID: 2147564665580255339}
   - component: {fileID: 2147564665580255338}
-  - component: {fileID: 2354543324029903497}
+  - component: {fileID: 3536601664701998298}
   m_Layer: 5
   m_Name: GameUIView
   m_TagString: Untagged
@@ -750,7 +750,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2354543324029903497
+--- !u!114 &3536601664701998298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -759,22 +759,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2147564665580255341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8fbac6013f45e0449af862c8538c63a, type: 3}
+  m_Script: {fileID: 11500000, guid: 69d4e279521cf7042ad8225d157ca781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnViewLeaderboardButtonClicked:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStartGameButtonClicked:
-    m_PersistentCalls:
-      m_Calls: []
   _configuration: {fileID: 11400000, guid: 28e7b012a002a51458322ba2fc05964d, type: 2}
-  _viewLeaderboardButton: {fileID: 2147564665852678943}
-  _startGameButton: {fileID: 2147564664515441719}
-  _logoCanvasGroup: {fileID: 6110362485676144983}
-  _aboutCanvasGroup: {fileID: 4078993589037531327}
-  _aboutBodyText: {fileID: 0}
-  _menuCanvasGroup: {fileID: 3783765942757375354}
+  _backButton: {fileID: 2147564664515441719}
+  _clickMeButton: {fileID: 2147564665852678943}
 --- !u!1 &2147564665631573222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,7 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21176471, g: 0.21176471, b: 0.21176471, a: 1}
+  m_Color: {r: 0.21960786, g: 0.2627451, b: 0.19607845, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

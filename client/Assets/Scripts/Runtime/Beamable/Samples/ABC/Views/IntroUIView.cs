@@ -1,11 +1,8 @@
-﻿using Beamable.Samples.ABC.Audio;
-using Beamable.Samples.ABC.Data;
+﻿using Beamable.Samples.ABC.Data;
 using DG.Tweening;
-using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Beamable.Samples.ABC.Views
@@ -25,12 +22,8 @@ namespace Beamable.Samples.ABC.Views
       }
 
       public CanvasGroup MenuCanvasGroup {  get { return _menuCanvasGroup; } }
-
-      [HideInInspector]
-      public UnityEvent OnViewLeaderboardButtonClicked = new UnityEvent();
-
-      [HideInInspector]
-      public UnityEvent OnStartGameButtonClicked = new UnityEvent();
+      public Button ViewLeaderboardButton { get { return _viewLeaderboardButton; } }
+      public Button StartGameButton { get { return _startGameButton; } }
 
       //  Fields ---------------------------------------
       [SerializeField]
@@ -43,61 +36,40 @@ namespace Beamable.Samples.ABC.Views
       private Button _startGameButton = null;
 
       [SerializeField]
-      private CanvasGroup _logoCanvasGroup = null;
-
-      [SerializeField]
-      private CanvasGroup _aboutCanvasGroup = null;
-
-      [SerializeField]
       private TMP_Text _aboutBodyText = null;
 
       [SerializeField]
       private CanvasGroup _menuCanvasGroup = null;
-      
+
+      [Header ("Cosmetic Animation")]
+      [SerializeField]
+      private List<CanvasGroup> _canvasGroups = null;
 
       //  Unity Methods   ------------------------------
       protected void Start()
       {
-         _viewLeaderboardButton.onClick.AddListener(ViewLeaderboardButton_OnClicked);
-         _startGameButton.onClick.AddListener(StartGameButton_OnClicked);
+         FadeCanvasGroups(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
+      }
 
-         //
-         _logoCanvasGroup.DOFade(0, 0);
-         _logoCanvasGroup.DOFade(1, 1);
+      private void FadeCanvasGroups(List<CanvasGroup> canvasGroups,
+         float fromAlpha, float toAlpha, float duration, float delayStart, float delayDelta)
+      {
+         float delay = delayStart;
+         foreach (CanvasGroup canvasGroup in canvasGroups)
+         {
+            // Fade out immediately
+            canvasGroup.DOFade(fromAlpha, 0);
 
-         //
-         _aboutCanvasGroup.DOFade(0, 0);
-         _aboutCanvasGroup.DOFade(1, 1).SetDelay(0.25f);
+            // Fade in slowly
+            canvasGroup.DOFade(toAlpha, duration).SetDelay(delay);
 
-         //
-         _menuCanvasGroup.DOFade(0, 0);
-         _menuCanvasGroup.DOFade(1, 1).SetDelay(0.50f);
+            delay += delayDelta;
+         }
       }
 
 
       //  Other Methods --------------------------------
-      private IEnumerator LoadScene(string sceneName)
-      {
-         _viewLeaderboardButton.interactable = false;
-         _startGameButton.interactable = false;
-
-         SoundManager.Instance.PlayAudioClip(SoundConstants.Click01);
-
-         yield return new WaitForSeconds(_configuration.Delay5BeforePointsView);
-         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-      }
-
 
       //  Event Handlers -------------------------------
-      private void ViewLeaderboardButton_OnClicked()
-      {
-         OnViewLeaderboardButtonClicked.Invoke();
-      }
-
-
-      private void StartGameButton_OnClicked()
-      {
-         OnStartGameButtonClicked.Invoke();
-      }
    }
 }

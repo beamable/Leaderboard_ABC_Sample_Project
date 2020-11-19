@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 215250266498224548}
   - component: {fileID: 215250266498224546}
   - component: {fileID: 215250266498224549}
+  - component: {fileID: 233440894}
   m_Layer: 5
   m_Name: AboutBodyText
   m_TagString: Untagged
@@ -301,10 +302,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "About Body Text About Body Text \n\nAbout Body Text About Body Text \n\nAbout
-    Body Text About Body Text \n\nAbout Body Text About Body Text \n\nAbout Body
-    Text About Body Text \n\nAbout Body Text About Body Text \n\nAbout Body Text
-    About Body Text \n\nAbout Body Text About Body Text "
+  m_text: '{AboutBodyText}
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1b86835476f8e648a6ce34b1a0b5e45, type: 2}
   m_sharedMaterial: {fileID: 1095925319132753811, guid: d1b86835476f8e648a6ce34b1a0b5e45,
@@ -332,8 +332,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 24
@@ -374,6 +374,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &233440894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215250266498224551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f698248da962c4c943b1abefe35ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textMesh: {fileID: 215250266498224549}
 --- !u!1 &215250266500578128
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,10 +882,12 @@ MonoBehaviour:
   _configuration: {fileID: 11400000, guid: 28e7b012a002a51458322ba2fc05964d, type: 2}
   _viewLeaderboardButton: {fileID: 215250267095910103}
   _startGameButton: {fileID: 215250267913101823}
-  _logoCanvasGroup: {fileID: 5475612003622087839}
-  _aboutCanvasGroup: {fileID: 2858212755364025719}
   _aboutBodyText: {fileID: 215250266498224549}
   _menuCanvasGroup: {fileID: 3149059879652370610}
+  _canvasGroups:
+  - {fileID: 5475612003622087839}
+  - {fileID: 2858212755364025719}
+  - {fileID: 3149059879652370610}
 --- !u!1 &215250266885034286
 GameObject:
   m_ObjectHideFlags: 0
