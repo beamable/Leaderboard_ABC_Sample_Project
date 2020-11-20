@@ -86,8 +86,8 @@ namespace Beamable.Samples.ABC
 
             text += "Button clicks grow trees. Click as many times as possible within the time limit." + "\n\n";
 
-            text += "This demo game showcases Beamable's Multiplayer feature " +
-               "which allows game makers to create real-time and turn-based multi-user game experiences.\n\n";
+            text += "This sample project allows game makers to understand and apply the benefits of the " +
+               "Leaderboard Flow in game development.\n\n";
 
             text += ABCHelper.GetBulletList("Resources", new List<string> 
             {
@@ -107,7 +107,7 @@ namespace Beamable.Samples.ABC
          return 0.5f + Mathf.Clamp01(growthPercentage);
       }
 
-      private static string InternetOfflineInstructionsText
+      public static string InternetOfflineInstructionsText
       {
          get
          {
@@ -124,13 +124,28 @@ namespace Beamable.Samples.ABC
       }
 
       /// <summary>
+      /// Convert the <see cref="float"/> to a <see cref="string"/>
+      /// with rounding like "10.1";
+      /// </summary>
+      public static string GetRoundedTime(float value)
+      {
+         return string.Format("{0:0.0}", value);
+      }
+
+      /// <summary>
       /// Convert the <see cref="double"/> to a whole number like an <see cref="int"/>.
       /// </summary>
-      /// <param name="score"></param>
-      /// <returns></returns>
       public static double GetRoundedScore(double score)
       {
          return (int)score;
+      }
+
+      /// <summary>
+      /// Convert the <see cref="string"/> to a whole number like an <see cref="int"/>.
+      /// </summary>
+      public static double GetRoundedScore(string score)
+      {
+         return GetRoundedScore(Double.Parse(score));
       }
 
       private static string BeamableSDKInstallInstructionsText

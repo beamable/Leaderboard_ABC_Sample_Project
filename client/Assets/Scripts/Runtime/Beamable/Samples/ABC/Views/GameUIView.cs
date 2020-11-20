@@ -2,6 +2,7 @@
 using Beamable.Samples.ABC.Data;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,12 +34,19 @@ namespace Beamable.Samples.ABC.Views
       [SerializeField]
       private Button _clickMeButton = null;
 
+      [Header("Cosmetic Animation")]
+      [SerializeField]
+      private List<CanvasGroup> _canvasGroups = null;
+
       //  Unity Methods   ------------------------------
       protected void Start()
       {
+         _statusText.text = "";
+
          _backButton.onClick.AddListener(BackButton_OnClicked);
          _clickMeButton.onClick.AddListener(ClickMeButton_OnClicked);
 
+         ABCHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
       }
 
       //  Other Methods --------------------------------

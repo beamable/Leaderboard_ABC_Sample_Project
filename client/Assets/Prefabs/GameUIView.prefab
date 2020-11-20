@@ -645,7 +645,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 100
+  m_PreferredHeight: 130
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
@@ -766,6 +766,9 @@ MonoBehaviour:
   _statusText: {fileID: 2147564665631573220}
   _backButton: {fileID: 2147564664515441719}
   _clickMeButton: {fileID: 2147564665852678943}
+  _canvasGroups:
+  - {fileID: 6110362485676144983}
+  - {fileID: 3783765942757375354}
 --- !u!1 &2147564665631573222
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,7 +781,7 @@ GameObject:
   - component: {fileID: 2147564665631573221}
   - component: {fileID: 2147564665631573220}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: StatusText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -830,9 +833,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '3... 2.... 1... Click!
+  m_text: '{StatusText}
 
-    You clicked {0} times.'
+    {StatusText}
+
+    {StatusText}'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 60ae79e4e39af454b9f52f0ed8e6d0ca, type: 2}
   m_sharedMaterial: {fileID: -8752424979909309645, guid: 60ae79e4e39af454b9f52f0ed8e6d0ca,
@@ -911,11 +916,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2147564665787883752}
-  - component: {fileID: 4078993589037531327}
   - component: {fileID: 9190833701447961282}
   - component: {fileID: 454736157963755095}
   m_Layer: 5
-  m_Name: About
+  m_Name: EmptySpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -940,18 +944,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
---- !u!225 &4078993589037531327
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2147564665787883755}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!222 &9190833701447961282
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -25,17 +25,14 @@ namespace Beamable.Samples.ABC.Data
       //
       public Vector3 TreeViewRotationMin { get { return _treeViewRotationMin; } }
       public Vector3 TreeViewRotationMax { get { return _treeViewRotationMax; } }
-      public float TotalClicksMin { get { return _totalClicksMin; } }
-      public float TotalClicksMax { get { return _totalClicksMax; } }
+      public float MockRandomScoreMin { get { return _mockRandomScoreMin; } }
+      public float MockRandomScoreMax { get { return _mockRandomScoreMax; } }
       public int LeaderboardMinRowCount { get { return _leaderboardMinRowCount; } }
       //
       public float DelayFadeInUI { get { return _delayFadeInUI; } }
-      public float Delay2BeforeBackswing { get { return _delay2BeforeBackswing; } }
-      public float Delay3BeforeForeswing { get { return _delay3BeforeForeswing; } }
-      public float Delay4BeforeTakeDamage { get { return _delay4BeforeTakeDamage; } }
-      public float Delay5BeforePointsView { get { return _delay5BeforePointsView; } }
-
- 
+      public float GameDuration { get { return _gameDuration; } }
+      public float PregameDuration { get { return _pregameDuration; } }
+      public int HighScoreDefault { get { return _highScoreDefault; } }
 
 
       //  Fields ---------------------------------------
@@ -64,29 +61,25 @@ namespace Beamable.Samples.ABC.Data
       [SerializeField]
       private Vector3 _treeViewRotationMax = new Vector3(0, 1f, 0);
 
-      [Header("Data")]
+      [Header("Game Data")]
       [SerializeField]
-      private float _totalClicksMin = 0;
+      private float _gameDuration = 5;
 
       [SerializeField]
-      private float _totalClicksMax = 25;
+      private float _pregameDuration = 3.9f;
 
       [Header("Mock Data")]
       [SerializeField]
       private int _leaderboardMinRowCount = 10;
 
-      //TODO: REmove these....
       [SerializeField]
-      private float _delay2BeforeBackswing = 0;
+      private int _highScoreDefault = 30;
 
       [SerializeField]
-      private float _delay3BeforeForeswing = 0;
+      private float _mockRandomScoreMin = 0;
 
       [SerializeField]
-      private float _delay4BeforeTakeDamage = 0;
-
-      [SerializeField]
-      private float _delay5BeforePointsView = 0;
+      private float _mockRandomScoreMax = 25;
 
    }
 }

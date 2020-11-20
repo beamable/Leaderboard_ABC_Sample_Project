@@ -35,26 +35,23 @@ namespace Beamable.Samples.ABC
          int currentRowCount = leaderboardView.rankings.Count;
          int targetRowCount = configuration.LeaderboardMinRowCount;
 
-         Debug.Log($"Leaderboard before. currentRowCount={currentRowCount}");
+         Debug.Log($"PopulateLeaderboardWithMockData() BEFORE, rowCount={currentRowCount}");
 
          if (currentRowCount < targetRowCount)
          {
             int itemsToCreate = targetRowCount - currentRowCount;
             for (int i = 0; i < itemsToCreate; i++)
             {
-               // Create user
-               // Login as user (Required before using "SetScore")
+               // Create NEW user
+               // Login as NEW user (Required before using "SetScore")
                await authService.CreateUser().FlatMap(disruptorEngine.ApplyToken);
 
-               // Rename user
+               // Rename NEW user
                string alias = ABCMockDataCreator.CreateNewRandomAlias("User");
-               await statsService.SetStats("public", new Dictionary<string, string>()
-               {
-                  { "alias", alias },
-               });
-
-               // Submit mock score
-               double mockScore = UnityEngine.Random.Range(configuration.TotalClicksMin, configuration.TotalClicksMax);
+               ABCMockDataCreator.SetCurrentUserAlias(statsService, alias);
+           
+               // Submit mock score for NEW user
+               double mockScore = UnityEngine.Random.Range(configuration.MockRandomScoreMin, configuration.MockRandomScoreMax);
                mockScore = ABCHelper.GetRoundedScore(mockScore);
                await leaderboardService.SetScore(leaderboardContent.Id, mockScore);
 
@@ -65,12 +62,20 @@ namespace Beamable.Samples.ABC
 
          LeaderBoardView leaderboardViewAfter = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
          int currentRowCountAfter = leaderboardViewAfter.rankings.Count;
-         Debug.Log($"Leaderboard after. currentRowCount={currentRowCountAfter}");
+         Debug.Log($"PopulateLeaderboardWithMockData() AFTER, rowCount={currentRowCountAfter}");
 
          // Login again as local user
          var deviceUsers = await disruptorEngine.GetDeviceUsers();
          var user = deviceUsers.First(bundle => bundle.User.id == localDbid);
          await disruptorEngine.ApplyToken(user.Token);
+      }
+
+      public static async void SetCurrentUserAlias(StatsService statsService, string alias)
+      {
+         await statsService.SetStats("public", new Dictionary<string, string>()
+            {
+               { "alias", alias },
+            });
       }
 
       /// <summary>

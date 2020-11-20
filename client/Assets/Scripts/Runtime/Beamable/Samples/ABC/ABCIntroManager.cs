@@ -1,5 +1,4 @@
-﻿using Beamable.Samples.ABC.Audio;
-using Beamable.Samples.ABC.Data;
+﻿using Beamable.Samples.ABC.Data;
 using Beamable.Samples.ABC.Views;
 using Core.Platform.SDK.Leaderboard;
 using Core.Platform.SDK.Stats;
@@ -20,6 +19,14 @@ namespace Beamable.Samples.ABC
    {
 
       //  Fields ---------------------------------------
+
+      /// <summary>
+      /// Determines if we are demo mode. Demo mode does several operations
+      /// which are not recommended in a production project including 
+      /// creating mock data for the game.
+      /// </summary>
+      private static bool IsDemoMode = true;
+
       [SerializeField]
       private IntroUIView _introUIView = null;
 
@@ -64,7 +71,6 @@ namespace Beamable.Samples.ABC
       /// </summary>
       private void SetupBeamable()
       {
-
          // Attempt Connection to Beamable
          DisruptorEngine.Instance.Then(de =>
          {
@@ -77,9 +83,17 @@ namespace Beamable.Samples.ABC
                _disruptorEngine.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
                ConnectivityService_OnConnectivityChanged(_disruptorEngine.ConnectivityService.HasConnectivity);
 
-               PopulateLeaderboardWithMockData(_disruptorEngine.LeaderboardService);
-               PopulateStats(_disruptorEngine.Stats, _disruptorEngine.LeaderboardService);
+               if (IsDemoMode)
+               {
+                  //Set my player's name
+                  ABCMockDataCreator.SetCurrentUserAlias(_disruptorEngine.Stats, "This_is_you:)");
 
+                  //Populate the leaderboard with at least 10 mock users/scores
+                  PopulateLeaderboardWithMockData(_disruptorEngine.LeaderboardService);
+
+                  //Set the Beamable stat(s) to have initial values
+                  PopulateStats(_disruptorEngine.Stats, _disruptorEngine.LeaderboardService);
+               }
             }
             catch (Exception e)
             {
@@ -108,15 +122,21 @@ namespace Beamable.Samples.ABC
          if (highScoreRankEntry != null)
          {
             highScore = highScoreRankEntry.score;
-            Debug.Log($"PopulateStats() highScore is rank={highScoreRankEntry.rank} value={highScore}");
          }
 
          // Set stat values to start a fresh game
          highScore = ABCHelper.GetRoundedScore(highScore);
          _highScoreStatBehaviour.SetCurrentValue(highScore.ToString());
+         _highScoreStatBehaviour.Write(highScore.ToString());
+
+         Debug.Log($"PopulateStats() _highScoreStatBehaviour={_highScoreStatBehaviour.Value}");
       }
 
 
+      /// <summary>
+      /// Add mock users with scores. This gives us as the user a sense of competition.
+      /// </summary>
+      /// <param name="leaderboardService"></param>
       private async void PopulateLeaderboardWithMockData(LeaderboardService leaderboardService)
       {
          LeaderboardContent leaderboardContent = await _leaderboardRef.Resolve();
