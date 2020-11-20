@@ -1,8 +1,13 @@
 ﻿using Beamable.Common;
 using Beamable.Samples.ABC.Data;
+using Core.Platform.SDK.Auth;
 using Core.Platform.SDK.Leaderboard;
+using Core.Platform.SDK.Stats;
 using DisruptorBeam;
 using DisruptorBeam.Content;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Beamable.Samples.ABC
 {
@@ -13,29 +18,90 @@ namespace Beamable.Samples.ABC
    public static class ABCMockDataCreator
    {
       //  Other Methods --------------------------------
-      public static async void PopulateLeaderboardWithMockData(IDisruptorEngine disruptorEngine, 
+      public static async void PopulateLeaderboardWithMockData(IDisruptorEngine disruptorEngine,
          LeaderboardContent leaderboardContent, Configuration configuration)
       {
          LeaderboardService leaderboardService = disruptorEngine.LeaderboardService;
+         StatsService statsService = disruptorEngine.Stats;
+         IAuthService authService = disruptorEngine.AuthService;
 
+         // Capture current user
+         var localDbid = disruptorEngine.User.id;
+
+         // Check Leaderboard
          LeaderBoardView leaderboardView = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
 
-         Debug.Log($"SetupBeamableLeaderboard()1 c={leaderboardView.boardsize}");
+         // Not enough data in the leaderboard? Create users with mock scores
+         int currentRowCount = leaderboardView.rankings.Count;
+         int targetRowCount = configuration.LeaderboardMinRowCount;
 
-         int targetItemCount = 10;
-         if (leaderboardView.boardsize < targetItemCount)
+         Debug.Log($"Leaderboard before. currentRowCount={currentRowCount}");
+
+         if (currentRowCount < targetRowCount)
          {
-            int itemsToCreate = targetItemCount - (int)leaderboardView.boardsize;
+            int itemsToCreate = targetRowCount - currentRowCount;
             for (int i = 0; i < itemsToCreate; i++)
             {
+               // Create user
+               // Login as user (Required before using "SetScore")
+               await authService.CreateUser().FlatMap(disruptorEngine.ApplyToken);
+
+               // Rename user
+               string alias = ABCMockDataCreator.CreateNewRandomAlias("User");
+               await statsService.SetStats("public", new Dictionary<string, string>()
+               {
+                  { "alias", alias },
+               });
+
+               // Submit mock score
                double mockScore = UnityEngine.Random.Range(configuration.TotalClicksMin, configuration.TotalClicksMax);
                mockScore = ABCHelper.GetRoundedScore(mockScore);
-
                await leaderboardService.SetScore(leaderboardContent.Id, mockScore);
+
+               Debug.Log($"PopulateLeaderboardWithMockData() Created Mock User. Alias={alias}, score:{mockScore}.");
+
             }
          }
-         LeaderBoardView leaderboardView2 = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
-         Debug.Log($"SetupBeamableLeaderboard()2 c={leaderboardView2.boardsize}");
+
+         LeaderBoardView leaderboardViewAfter = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
+         int currentRowCountAfter = leaderboardViewAfter.rankings.Count;
+         Debug.Log($"Leaderboard after. currentRowCount={currentRowCountAfter}");
+
+         // Login again as local user
+         var deviceUsers = await disruptorEngine.GetDeviceUsers();
+         var user = deviceUsers.First(bundle => bundle.User.id == localDbid);
+         await disruptorEngine.ApplyToken(user.Token);
+      }
+
+      /// <summary>
+      /// Inspired by http://developer.qbapi.com/Generate-a-Random-Username.aspx
+      /// </summary>
+      private static string CreateNewRandomAlias(string prependName)
+      {
+         string alias = prependName;
+
+         char[] lowers = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+         char[] uppers = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+         char[] numbers = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+         int l = lowers.Length;
+         int u = uppers.Length;
+         int n = numbers.Length;
+
+         Random random = new Random();
+         alias += "_";
+         //
+         alias += lowers[random.Next(0, l)].ToString();
+         //
+         alias += uppers[random.Next(0, u)].ToString();
+         //
+         alias += "_";
+         //
+         alias += numbers[random.Next(0, n)].ToString();
+         alias += numbers[random.Next(0, n)].ToString();
+         alias += numbers[random.Next(0, n)].ToString();
+
+         return alias;
       }
    }
 }

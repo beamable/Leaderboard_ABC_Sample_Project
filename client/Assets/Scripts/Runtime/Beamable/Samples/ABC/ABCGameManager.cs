@@ -1,4 +1,5 @@
-﻿using Beamable.Samples.ABC.Data;
+﻿using Beamable.Samples.ABC.Audio;
+using Beamable.Samples.ABC.Data;
 using Beamable.Samples.ABC.Views;
 using DisruptorBeam.Stats;
 using System;
@@ -34,8 +35,13 @@ namespace Beamable.Samples.ABC
          _gameUIView.BackButton.onClick.AddListener(BackButton_OnClicked);
          _gameUIView.ClickMeButton.onClick.AddListener(ClickMeButton_OnClicked);
 
+         //Sync refresh tree
+         CurrentScoreStatBehaviour_OnStatReceived("0");
+
+         //Async refresh value
          _currentScoreStatBehaviour.OnStatReceived.AddListener(CurrentScoreStatBehaviour_OnStatReceived);
          _currentScoreStatBehaviour.SetCurrentValue("0");
+         
 
          Debug.Log("the global _highScoreStatBehaviour = " + _highScoreStatBehaviour.Value);
       }
@@ -46,28 +52,34 @@ namespace Beamable.Samples.ABC
       //  Event Handlers -------------------------------
       private void ClickMeButton_OnClicked()
       {
+      
          int value = Int32.Parse(_currentScoreStatBehaviour.Value) + 1;
          _currentScoreStatBehaviour.SetCurrentValue(value.ToString());
       }
 
       private void BackButton_OnClicked()
       {
-         _currentScoreStatBehaviour.SetCurrentValue("0");
+         SoundManager.Instance.PlayAudioClip(SoundConstants.Click01);
 
-         ABCHelper.LoadScene(_configuration.IntroSceneName, 0);
+         _currentScoreStatBehaviour.SetCurrentValue("0");
+         ABCHelper.LoadScene_Coroutine(_configuration.IntroSceneName, 0);
       }
 
-      private void CurrentScoreStatBehaviour_OnStatReceived(string value)
+      private void CurrentScoreStatBehaviour_OnStatReceived(string score)
       {
-         Debug.Log("CurrentScoreStatBehaviour_OnStatReceived() : " + value);
+         //TODO: Use stat here
+         float highScore = 50;
 
          // Beating the high score will 'complete' the tree
-         float highScore = 50;
-         float growthPercentageOf100 = (100 * Int32.Parse(value)) / highScore;
+         float growthPercentageOf100 = (100 * Int32.Parse(score)) / highScore;
          _treeView.GrowthPercentage = Mathf.Clamp01(growthPercentageOf100 / 100);
             
-         Debug.Log("growthPercentageOf100() : " + growthPercentageOf100);
+         float pitch = ABCHelper.GetAudioPitchByGrowthPercentage(_treeView.GrowthPercentage);
+         SoundManager.Instance.PlayAudioClip(SoundConstants.Click02, pitch);
 
+         _gameUIView.StatusText.text = $"3...2....1. You Clicked {score} times!";
+
+         Debug.Log("_treeView.GrowthPercentage() : " + _treeView.GrowthPercentage);
       }
    }
 }

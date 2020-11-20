@@ -763,6 +763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _configuration: {fileID: 11400000, guid: 28e7b012a002a51458322ba2fc05964d, type: 2}
+  _statusText: {fileID: 2147564665631573220}
   _backButton: {fileID: 2147564664515441719}
   _clickMeButton: {fileID: 2147564665852678943}
 --- !u!1 &2147564665631573222

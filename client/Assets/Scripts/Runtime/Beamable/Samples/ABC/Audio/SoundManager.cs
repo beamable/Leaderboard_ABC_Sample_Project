@@ -20,7 +20,6 @@ namespace Beamable.Samples.ABC.Audio
 		protected override void Awake()
 		{
 			base.Awake();
-
 			/// If/after updating AudioClips in the UnityEditor, run this once to rebuild const *.cs
 			//DebugLogCodeSnippet();
 		}
@@ -41,17 +40,38 @@ namespace Beamable.Samples.ABC.Audio
 			Debug.Log(stringBuilder.ToString());
 		}
 
-
-		/// <summary>
-		/// Play the AudioClip by name.
-		/// </summary>
-		public void PlayAudioClip(string audioClipName)
+		public void PlayAudioClip(string audioClipName, float pitch)
 		{
 			foreach (AudioClip audioClip in _audioClips)
 			{
 				if (audioClip.name == audioClipName)
 				{
-					PlayAudioClip(audioClip);
+					PlayAudioClip(audioClip, pitch);
+					return;
+				}
+			}
+		}
+		/// <summary>
+		/// Play the AudioClip by name.
+		/// </summary>
+		public void PlayAudioClip(string audioClipName)
+		{
+			PlayAudioClip(audioClipName, 1);
+		}
+
+		/// <summary>
+		/// Play the AudioClip by reference.
+		/// If all sources are occupied, nothing will play.
+		/// </summary>
+		public void PlayAudioClip(AudioClip audioClip, float pitch)
+		{
+			foreach (AudioSource audioSource in _audioSources)
+			{
+				if (!audioSource.isPlaying)
+				{
+					audioSource.clip = audioClip;
+					audioSource.pitch = pitch;
+					audioSource.Play();
 					return;
 				}
 			}
@@ -63,16 +83,7 @@ namespace Beamable.Samples.ABC.Audio
 		/// </summary>
 		public void PlayAudioClip(AudioClip audioClip)
 		{
-			foreach (AudioSource audioSource in _audioSources)
-			{
-				if (!audioSource.isPlaying)
-				{
-					audioSource.clip = audioClip;
-					audioSource.Play();
-					//Debug.Log("PlayAudioClip() name: " + audioSource.clip.name);
-					return;
-				}
-			}
+			PlayAudioClip (audioClip, 1);
 		}
 	}
 }

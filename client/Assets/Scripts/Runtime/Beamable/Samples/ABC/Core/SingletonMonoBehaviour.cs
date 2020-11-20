@@ -44,22 +44,28 @@ namespace Beamable.Samples.ABC.Core
 
 		public static T Instantiate()
 		{
-			
 			if (!IsInstantiated)
 			{
 				_Instance = GameObject.FindObjectOfType<T>();
+				
 				if (_Instance == null)
             {
 					GameObject go = new GameObject();
 					_Instance = go.AddComponent<T>();
 					go.name = _Instance.GetType().FullName;
-					DontDestroyOnLoad(go);
 				}
 				if (OnInstantiateCompleted != null)
 				{
 					OnInstantiateCompleted(_Instance);
 				}
 			}
+
+			// DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+			_Instance.transform.SetParent(null);
+
+			// Keep this alive between scenes
+			DontDestroyOnLoad(_Instance.gameObject);
+
 			return _Instance;
 		}
 
@@ -72,21 +78,24 @@ namespace Beamable.Samples.ABC.Core
 
 		public static void Destroy()
 		{
-
 			if (IsInstantiated)
 			{
-				if (Application.isPlaying)
-            {
-					Destroy(_Instance.gameObject);
-				}
-				else
-            {
-					DestroyImmediate(_Instance.gameObject);
-				}
-				
+				Destroy(_Instance.gameObject);
 				_Instance = null;
 			}
 		}
-
+		private static void Destroy(GameObject go)
+		{
+			if (Application.isPlaying)
+			{
+				Debug.Log("Destroy() 1: " + _Instance.GetInstanceID());
+				Destroy(go);
+			}
+			else
+			{
+				Debug.Log("Destroy() 2: " + _Instance.GetInstanceID());
+				DestroyImmediate(go);
+			}
+		}
 	}
 }

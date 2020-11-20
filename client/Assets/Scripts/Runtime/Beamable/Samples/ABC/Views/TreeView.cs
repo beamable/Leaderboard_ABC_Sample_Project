@@ -1,8 +1,11 @@
 ﻿using Beamable.Samples.ABC.Data;
 using UnityEngine;
 using System.Collections.Generic;
-using System;
+using DG.Tweening;
 using System.Linq;
+using System;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -16,6 +19,8 @@ namespace Beamable.Samples.ABC.Views
    public class TreeView : MonoBehaviour
    {
       //  Properties -----------------------------------
+      private const float RoundedCubeDeltaY = 0.5f;
+
       public float GrowthPercentage 
       {  
          get 
@@ -28,6 +33,8 @@ namespace Beamable.Samples.ABC.Views
             RenderGrowth();
          }
       }
+
+      
 
       //  Fields ---------------------------------------
       [SerializeField]
@@ -45,7 +52,6 @@ namespace Beamable.Samples.ABC.Views
       [SerializeField]
       private bool _isRotating = true;
 
-
       /// <summary>
       /// This list is created and sorted at edit time, and used
       /// at runtime to 'grow' the tree from bottom to top.
@@ -61,6 +67,11 @@ namespace Beamable.Samples.ABC.Views
       [SerializeField]
       private bool _willSort = false;
 
+      //Keep as serialized. Created at edit time, used at runtime
+      [HideInInspector]
+      [SerializeField]
+      private Dictionary<int, Vector3> _roundedCubeOriginalPositions = new Dictionary<int, Vector3>();
+
       //  Unity Methods   ------------------------------
 
       void OnEnable()
@@ -75,6 +86,12 @@ namespace Beamable.Samples.ABC.Views
          EditorApplication.update -= UpdateAlways;
       }
 
+      
+      protected void Start()
+      {
+         _roundedCubeOriginalPositions = TreeView.GetOriginalPositions(_roundedCubes);
+      }
+
       protected void Update()
       {
          UpdateAlways();
@@ -87,7 +104,12 @@ namespace Beamable.Samples.ABC.Views
          if (_willSort)
          {
             _willSort = false;
+
+            //Keep log
+            Debug.Log("RenderGrowth() Sorted!");
+
             _roundedCubes = TreeView.SortByDistance(_roundedCubes, _growthOrigin.transform.position);
+            _roundedCubeOriginalPositions = TreeView.GetOriginalPositions(_roundedCubes);
          }
 
          //Change effects during growth
@@ -101,25 +123,66 @@ namespace Beamable.Samples.ABC.Views
 
             if (indexPercentage <= _growthPercentage)
             {
-               SetActiveSafe(roundedCube, true);
+               SetActiveSafe(roundedCube, i, true);
             }
             else
             {
-               SetActiveSafe(roundedCube, false);
+               SetActiveSafe(roundedCube, i, false);
             }
          }
       }
 
-      public static List<GameObject> SortByDistance(List<GameObject> objects, Vector3 measureFrom)
+      /// <summary>
+      /// Store original positions to help animation
+      /// </summary>
+      /// <param name="roundedCubes"></param>
+      /// <returns></returns>
+      private static Dictionary<int, Vector3> GetOriginalPositions(List<GameObject> roundedCubes)
       {
-         return objects.OrderBy(x => Vector3.Distance(x.transform.position, measureFrom)).ToList();
+         Dictionary<int, Vector3> positionsByIndex = new Dictionary<int, Vector3>();
+
+         for (int i = 0; i < roundedCubes.Count; i++)
+         {
+            GameObject nextGo = roundedCubes[i];
+            positionsByIndex[i] = nextGo.transform.position;
+         }
+
+         return positionsByIndex;
       }
 
-      private void SetActiveSafe(GameObject go, bool isActive)
+      public static List<GameObject> SortByDistance(List<GameObject> gos, Vector3 measureFrom)
+      {
+         return gos.OrderBy(x => Vector3.Distance(x.transform.position, measureFrom)).ToList();
+      }
+
+      private void SetActiveSafe(GameObject go, int index, bool isActive)
       {
          if (go.activeInHierarchy != isActive)
          {
-            go.SetActive(isActive);
+
+            if (isActive)
+            {
+               go.SetActive(true);
+
+               go.transform.DOBlendableScaleBy(new Vector3(0, -RoundedCubeDeltaY, 0), 0);
+               go.transform.DOBlendableScaleBy(new Vector3(0, RoundedCubeDeltaY, 0), 1).
+                  SetDelay(0.01f).
+                  SetEase(Ease.OutBack);
+
+               go.transform.DOScale(new Vector3(0, 0, 0), 0);
+               go.transform.DOScale(new Vector3(1, 1, 1), 1);
+            }
+            else
+            {
+               go.SetActive(false);
+               go.transform.DOScale(new Vector3(1, 1, 1), 0);
+               go.transform.DOScale(new Vector3(0, 0, 0), 0.25f).
+                  SetDelay(0.01f).
+                  OnComplete(() =>
+                  {
+                     go.SetActive(false);
+                  });
+            }
          }
       }
 

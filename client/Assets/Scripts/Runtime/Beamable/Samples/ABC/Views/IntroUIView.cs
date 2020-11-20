@@ -1,5 +1,4 @@
 ﻿using Beamable.Samples.ABC.Data;
-using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -48,25 +47,8 @@ namespace Beamable.Samples.ABC.Views
       //  Unity Methods   ------------------------------
       protected void Start()
       {
-         FadeCanvasGroups(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
+         ABCHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
       }
-
-      private void FadeCanvasGroups(List<CanvasGroup> canvasGroups,
-         float fromAlpha, float toAlpha, float duration, float delayStart, float delayDelta)
-      {
-         float delay = delayStart;
-         foreach (CanvasGroup canvasGroup in canvasGroups)
-         {
-            // Fade out immediately
-            canvasGroup.DOFade(fromAlpha, 0);
-
-            // Fade in slowly
-            canvasGroup.DOFade(toAlpha, duration).SetDelay(delay);
-
-            delay += delayDelta;
-         }
-      }
-
 
       //  Other Methods --------------------------------
 

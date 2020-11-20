@@ -18,10 +18,14 @@ namespace Beamable.Samples.ABC.Views
       //  Properties -----------------------------------
       public Button BackButton { get { return _backButton; } }
       public Button ClickMeButton { get { return _clickMeButton; } }
+      public TMP_Text StatusText { get { return _statusText; } }
 
       //  Fields ---------------------------------------
       [SerializeField]
       private Configuration _configuration = null;
+
+      [SerializeField]
+      private TMP_Text _statusText = null;
 
       [SerializeField]
       private Button _backButton = null;

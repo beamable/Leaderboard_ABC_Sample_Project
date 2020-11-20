@@ -16,9 +16,12 @@ MonoBehaviour:
   _gameSceneName: 2.Game
   _leaderboardSceneName: 3.Leaderboard
   _delayBeforeLoadScene: 0.5
+  _delayFadeInUI: 0.25
   _treeViewRotationMin: {x: 0, y: 0.25, z: 0}
   _treeViewRotationMax: {x: 0, y: 0.5, z: 0}
-  _delay1BeforeAttack: 0.1
+  _totalClicksMin: 5
+  _totalClicksMax: 25
+  _leaderboardMinRowCount: 10
   _delay2BeforeBackswing: 0.25
   _delay3BeforeForeswing: 1
   _delay4BeforeTakeDamage: 0.5

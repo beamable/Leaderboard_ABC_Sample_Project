@@ -28,7 +28,7 @@ namespace Beamable.Samples.ABC
       //  Event Handlers -------------------------------
       private void CloseButton_OnClicked()
       {
-         StartCoroutine(ABCHelper.LoadScene(_configuration.IntroSceneName,
+         StartCoroutine(ABCHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
       }
    }

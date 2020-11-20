@@ -91,34 +91,38 @@ namespace Beamable.Samples.ABC
          });
       }
 
+      /// <summary>
+      /// Set a highscore stat to the global high score. This is used to 
+      /// calibrate the difficulty and rendering animations of the game.
+      /// </summary>
+      /// <param name="statsService"></param>
+      /// <param name="leaderboardService"></param>
       private async void PopulateStats(StatsService statsService, LeaderboardService leaderboardService)
       {
          LeaderboardContent leaderboardContent = await _leaderboardRef.Resolve();
          LeaderBoardView leaderboardView = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
-
-         Debug.Log($"SetupBeamableLeaderboard()1 c={leaderboardView.boardsize}");
-
          List<RankEntry> rankEntries = leaderboardView.rankings;
          RankEntry highScoreRankEntry = rankEntries.FirstOrDefault();
+
          double highScore = 0;
-         //1
          if (highScoreRankEntry != null)
          {
             highScore = highScoreRankEntry.score;
-            Debug.Log($"highScoreRankEntry()1 r={highScoreRankEntry.rank} score={highScore}");
+            Debug.Log($"PopulateStats() highScore is rank={highScoreRankEntry.rank} value={highScore}");
          }
 
          // Set stat values to start a fresh game
          highScore = ABCHelper.GetRoundedScore(highScore);
          _highScoreStatBehaviour.SetCurrentValue(highScore.ToString());
-
       }
+
 
       private async void PopulateLeaderboardWithMockData(LeaderboardService leaderboardService)
       {
          LeaderboardContent leaderboardContent = await _leaderboardRef.Resolve();
          ABCMockDataCreator.PopulateLeaderboardWithMockData(_disruptorEngine, leaderboardContent, _configuration);
       }
+
 
       /// <summary>
       /// Render the user-facing text with success or helpful errors.
@@ -153,7 +157,7 @@ namespace Beamable.Samples.ABC
       {
          _introUIView.MenuCanvasGroup.interactable = false;
 
-         StartCoroutine(ABCHelper.LoadScene(_configuration.LeaderboardSceneName, 
+         StartCoroutine(ABCHelper.LoadScene_Coroutine(_configuration.LeaderboardSceneName, 
             _configuration.DelayBeforeLoadScene));
       }
 
@@ -162,7 +166,7 @@ namespace Beamable.Samples.ABC
       {
          _introUIView.MenuCanvasGroup.interactable = false;
 
-         StartCoroutine(ABCHelper.LoadScene(_configuration.GameSceneName, 
+         StartCoroutine(ABCHelper.LoadScene_Coroutine(_configuration.GameSceneName, 
             _configuration.DelayBeforeLoadScene));
       }
    }

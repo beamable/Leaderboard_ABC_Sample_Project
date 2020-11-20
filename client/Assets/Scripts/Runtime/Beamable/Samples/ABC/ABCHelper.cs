@@ -15,10 +15,8 @@ namespace Beamable.Samples.ABC
    {
       //  Other Methods --------------------------------
 
-      public static IEnumerator LoadScene(string sceneName, float delayBeforeLoading)
+      public static IEnumerator LoadScene_Coroutine(string sceneName, float delayBeforeLoading)
       {
-        
-
          SoundManager.Instance.PlayAudioClip(SoundConstants.Click01);
 
          yield return new WaitForSeconds(delayBeforeLoading);
@@ -80,7 +78,6 @@ namespace Beamable.Samples.ABC
          return text;
       }
 
-
       private static string GameInstructionsText
       {
          get
@@ -102,6 +99,12 @@ namespace Beamable.Samples.ABC
 
             return text;
          }
+      }
+
+      public static float GetAudioPitchByGrowthPercentage(float growthPercentage)
+      {
+         //From 0.5 to 1.5
+         return 0.5f + Mathf.Clamp01(growthPercentage);
       }
 
       private static string InternetOfflineInstructionsText
@@ -158,6 +161,28 @@ namespace Beamable.Samples.ABC
          text += "</indent>" + "\n";
          return text;
       }
+
+      /// <summary>
+      /// Fades opacity of a list of 2D objects over time, in series.
+      /// </summary>
+      public static void CanvasGroupsDoFade(List<CanvasGroup> canvasGroups,
+               float fromAlpha, float toAlpha, float duration, float delayStart, float delayDelta)
+      {
+
+         float delay = delayStart;
+
+         foreach (CanvasGroup canvasGroup in canvasGroups)
+         {
+            // Fade out immediately
+            canvasGroup.DOFade(fromAlpha, 0);
+
+            // Fade in slowly
+            canvasGroup.DOFade(toAlpha, duration).SetDelay(delay);
+
+            delay += delayDelta;
+         }
+      }
+
 
       /// <summary>
       /// Fades opacity of a 3D object over time.
