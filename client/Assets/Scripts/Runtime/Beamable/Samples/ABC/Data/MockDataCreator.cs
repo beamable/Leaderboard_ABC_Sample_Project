@@ -15,7 +15,7 @@ namespace Beamable.Samples.ABC
    /// Create mock data. This is appropriate for a sample project, but not for
    /// production.
    /// </summary>
-   public static class ABCMockDataCreator
+   public static class MockDataCreator
    {
       //  Other Methods --------------------------------
       public static async void PopulateLeaderboardWithMockData(IDisruptorEngine disruptorEngine,
@@ -47,8 +47,8 @@ namespace Beamable.Samples.ABC
                await authService.CreateUser().FlatMap(disruptorEngine.ApplyToken);
 
                // Rename NEW user
-               string alias = ABCMockDataCreator.CreateNewRandomAlias("User");
-               ABCMockDataCreator.SetCurrentUserAlias(statsService, alias);
+               string alias = MockDataCreator.CreateNewRandomAlias("User");
+               MockDataCreator.SetCurrentUserAlias(statsService, alias);
            
                // Submit mock score for NEW user
                double mockScore = UnityEngine.Random.Range(configuration.MockRandomScoreMin, configuration.MockRandomScoreMax);

@@ -15,7 +15,7 @@ namespace Beamable.Samples.ABC
    /// <summary>
    /// Handles the intro menu scene logic.
    /// </summary>
-   public class ABCIntroManager : MonoBehaviour
+   public class IntroSceneManager : MonoBehaviour
    {
 
       //  Fields ---------------------------------------
@@ -86,7 +86,7 @@ namespace Beamable.Samples.ABC
                if (IsDemoMode)
                {
                   //Set my player's name
-                  ABCMockDataCreator.SetCurrentUserAlias(_disruptorEngine.Stats, "This_is_you:)");
+                  MockDataCreator.SetCurrentUserAlias(_disruptorEngine.Stats, "This_is_you:)");
 
                   //Populate the leaderboard with at least 10 mock users/scores
                   PopulateLeaderboardWithMockData(_disruptorEngine.LeaderboardService);
@@ -127,7 +127,7 @@ namespace Beamable.Samples.ABC
          // Set stat values to start a fresh game
          highScore = ABCHelper.GetRoundedScore(highScore);
          _highScoreStatBehaviour.SetCurrentValue(highScore.ToString());
-         _highScoreStatBehaviour.Write(highScore.ToString());
+         await _highScoreStatBehaviour.Write(highScore.ToString());
 
          Debug.Log($"PopulateStats() _highScoreStatBehaviour={_highScoreStatBehaviour.Value}");
       }
@@ -140,7 +140,7 @@ namespace Beamable.Samples.ABC
       private async void PopulateLeaderboardWithMockData(LeaderboardService leaderboardService)
       {
          LeaderboardContent leaderboardContent = await _leaderboardRef.Resolve();
-         ABCMockDataCreator.PopulateLeaderboardWithMockData(_disruptorEngine, leaderboardContent, _configuration);
+         MockDataCreator.PopulateLeaderboardWithMockData(_disruptorEngine, leaderboardContent, _configuration);
       }
 
 

@@ -7,7 +7,7 @@ namespace Beamable.Samples.ABC
    /// <summary>
    /// Handles the Leaderboard scene logic.
    /// </summary>
-   public class ABCLeaderboardManager : MonoBehaviour
+   public class LeaderboardSceneManager : MonoBehaviour
    {
 
       //  Fields ---------------------------------------

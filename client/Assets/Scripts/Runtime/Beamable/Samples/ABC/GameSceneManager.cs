@@ -14,7 +14,7 @@ namespace Beamable.Samples.ABC
    /// The main entry point for in-game logic for the primary game scene.
    /// 
    /// </summary>
-   public class ABCGameManager : MonoBehaviour
+   public class GameSceneManager : MonoBehaviour
    {
       //  Class Fields ---------------------------------
       public enum GameState

@@ -1,11 +1,8 @@
 ﻿using Beamable.Samples.ABC.Data;
 using UnityEngine;
 using System.Collections.Generic;
-using DG.Tweening;
 using System.Linq;
-using System;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
+using Beamable.Samples.ABC.Core;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -67,11 +64,6 @@ namespace Beamable.Samples.ABC.Views
       [SerializeField]
       private bool _willSort = false;
 
-      //Keep as serialized. Created at edit time, used at runtime
-      [HideInInspector]
-      [SerializeField]
-      private Dictionary<int, Vector3> _roundedCubeOriginalPositions = new Dictionary<int, Vector3>();
-
       //  Unity Methods   ------------------------------
 
       void OnEnable()
@@ -84,12 +76,6 @@ namespace Beamable.Samples.ABC.Views
       void OnDisable()
       {
          EditorApplication.update -= UpdateAlways;
-      }
-
-      
-      protected void Start()
-      {
-         _roundedCubeOriginalPositions = TreeView.GetOriginalPositions(_roundedCubes);
       }
 
       protected void Update()
@@ -109,7 +95,6 @@ namespace Beamable.Samples.ABC.Views
             Debug.Log("RenderGrowth() Sorted!");
 
             _roundedCubes = TreeView.SortByDistance(_roundedCubes, _growthOrigin.transform.position);
-            _roundedCubeOriginalPositions = TreeView.GetOriginalPositions(_roundedCubes);
          }
 
          //Change effects during growth
@@ -123,11 +108,11 @@ namespace Beamable.Samples.ABC.Views
 
             if (indexPercentage <= _growthPercentage)
             {
-               SetActiveSafe(roundedCube, i, true);
+               SetRoundedCubeActive(i, true);
             }
             else
             {
-               SetActiveSafe(roundedCube, i, false);
+               SetRoundedCubeActive(i, false);
             }
          }
       }
@@ -155,36 +140,38 @@ namespace Beamable.Samples.ABC.Views
          return gos.OrderBy(x => Vector3.Distance(x.transform.position, measureFrom)).ToList();
       }
 
-      private void SetActiveSafe(GameObject go, int index, bool isActive)
+      private void SetRoundedCubeActive(int index, bool isActive)
       {
-         if (go.activeInHierarchy != isActive)
+         GameObject currentGo = _roundedCubes[index];
+
+         if (currentGo.activeInHierarchy != isActive)
          {
 
             if (isActive)
             {
-               go.SetActive(true);
+               // Make visible
+               currentGo.SetActive(true);
 
-               go.transform.DOBlendableScaleBy(new Vector3(0, -RoundedCubeDeltaY, 0), 0);
-               go.transform.DOBlendableScaleBy(new Vector3(0, RoundedCubeDeltaY, 0), 1).
-                  SetDelay(0.01f).
-                  SetEase(Ease.OutBack);
+               // Move from DOWN to UP. Simulates "Growth"
+               TweenHelper.TransformDOBlendableScaleBy(currentGo,
+                  new Vector3(0, -RoundedCubeDeltaY, 0),
+                  new Vector3(0, RoundedCubeDeltaY, 0),
+                  _configuration.DelayFadeInRoundedCube);
 
-               go.transform.DOScale(new Vector3(0, 0, 0), 0);
-               go.transform.DOScale(new Vector3(1, 1, 1), 1);
+               // Scale from 0 to 100%. Simulates "Growth"
+               TweenHelper.TransformDoScale(currentGo, 
+                  new Vector3(0, 0, 0), 
+                  new Vector3(1, 1, 1),
+                  _configuration.DelayFadeInRoundedCube);
+               
             }
             else
             {
-               go.SetActive(false);
-               go.transform.DOScale(new Vector3(1, 1, 1), 0);
-               go.transform.DOScale(new Vector3(0, 0, 0), 0.25f).
-                  SetDelay(0.01f).
-                  OnComplete(() =>
-                  {
-                     go.SetActive(false);
-                  });
+               currentGo.SetActive(false);
             }
          }
       }
+
 
       //  Event Handlers -------------------------------
       private void UpdateAlways()

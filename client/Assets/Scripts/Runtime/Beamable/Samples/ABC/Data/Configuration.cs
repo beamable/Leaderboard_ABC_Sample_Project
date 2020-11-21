@@ -30,6 +30,7 @@ namespace Beamable.Samples.ABC.Data
       public int LeaderboardMinRowCount { get { return _leaderboardMinRowCount; } }
       //
       public float DelayFadeInUI { get { return _delayFadeInUI; } }
+      public float DelayFadeInRoundedCube { get { return _delayFadeInRoundedCube; } }
       public float GameDuration { get { return _gameDuration; } }
       public float PregameDuration { get { return _pregameDuration; } }
       public int HighScoreDefault { get { return _highScoreDefault; } }
@@ -51,15 +52,18 @@ namespace Beamable.Samples.ABC.Data
       [SerializeField]
       private float _delayBeforeLoadScene = 0;
 
-      [SerializeField]
-      private float _delayFadeInUI = 0.25f;
-
       [Header("Cosmetic Animation")]
       [SerializeField]
       private Vector3 _treeViewRotationMin = new Vector3(0, 0.5f, 0);
 
       [SerializeField]
       private Vector3 _treeViewRotationMax = new Vector3(0, 1f, 0);
+
+      [SerializeField]
+      private float _delayFadeInUI = 0.25f;
+
+      [SerializeField]
+      private float _delayFadeInRoundedCube = 1f;
 
       [Header("Game Data")]
       [SerializeField]

@@ -1,12 +1,8 @@
-﻿using Beamable.Samples.ABC.Audio;
+﻿using Beamable.Samples.ABC.Core;
 using Beamable.Samples.ABC.Data;
-using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Beamable.Samples.ABC.Views
@@ -46,7 +42,7 @@ namespace Beamable.Samples.ABC.Views
          _backButton.onClick.AddListener(BackButton_OnClicked);
          _clickMeButton.onClick.AddListener(ClickMeButton_OnClicked);
 
-         ABCHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
+         TweenHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
       }
 
       //  Other Methods --------------------------------

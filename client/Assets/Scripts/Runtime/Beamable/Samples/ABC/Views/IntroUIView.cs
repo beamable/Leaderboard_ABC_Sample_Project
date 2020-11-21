@@ -1,4 +1,5 @@
-﻿using Beamable.Samples.ABC.Data;
+﻿using Beamable.Samples.ABC.Core;
+using Beamable.Samples.ABC.Data;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace Beamable.Samples.ABC.Views
       //  Unity Methods   ------------------------------
       protected void Start()
       {
-         ABCHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
+         TweenHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
       }
 
       //  Other Methods --------------------------------

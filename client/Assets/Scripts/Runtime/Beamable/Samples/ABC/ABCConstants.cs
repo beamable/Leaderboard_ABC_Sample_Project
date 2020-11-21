@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Beamable.Samples.ABC
+﻿namespace Beamable.Samples.ABC
 {
    /// <summary>
    /// Store commonly used string values for easier editor-assisted 

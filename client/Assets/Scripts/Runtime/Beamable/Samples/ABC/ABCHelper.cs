@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using System;
 using System.Collections;
 using Beamable.Samples.ABC.Audio;
@@ -175,60 +174,6 @@ namespace Beamable.Samples.ABC
          }
          text += "</indent>" + "\n";
          return text;
-      }
-
-      /// <summary>
-      /// Fades opacity of a list of 2D objects over time, in series.
-      /// </summary>
-      public static void CanvasGroupsDoFade(List<CanvasGroup> canvasGroups,
-               float fromAlpha, float toAlpha, float duration, float delayStart, float delayDelta)
-      {
-
-         float delay = delayStart;
-
-         foreach (CanvasGroup canvasGroup in canvasGroups)
-         {
-            // Fade out immediately
-            canvasGroup.DOFade(fromAlpha, 0);
-
-            // Fade in slowly
-            canvasGroup.DOFade(toAlpha, duration).SetDelay(delay);
-
-            delay += delayDelta;
-         }
-      }
-
-
-      /// <summary>
-      /// Fades opacity of a 3D object over time.
-      /// </summary>
-      public static void RenderersDoFade(List<Renderer> renderers, float fromAlpha, float toAlpha, float delay, float duration)
-      {
-         foreach (Renderer r in renderers)
-         {
-            foreach (Material m in r.materials)
-            {
-               m.DOFade(0, 3).SetDelay(delay);
-            }
-         }
-      }
-
-      /// <summary>
-      /// Changes color of a 3D object temporarily. (E.g. Flicker red to indicate taking damage)
-      /// </summary>
-      public static void RenderersDoColorFlicker(List<Renderer> renderers, Color color, float duration)
-      {
-         foreach (Renderer r in renderers)
-         {
-            foreach (Material m in r.materials)
-            {
-               Color oldColor = m.color;
-               m.DOColor(color, duration).OnComplete(() =>
-               {
-                  m.color = oldColor;
-               });
-            }
-         }
       }
 
       /// <summary>
