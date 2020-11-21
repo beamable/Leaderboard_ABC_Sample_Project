@@ -43,8 +43,7 @@ namespace Beamable.Samples.ABC.Views
       [SerializeField]
       private PostProcessingView _postProcessingView = null;
 
-      [SerializeField]
-      private bool _isRotating = true;
+
 
 
       /// <summary>
@@ -62,19 +61,21 @@ namespace Beamable.Samples.ABC.Views
       [SerializeField]
       private bool _willSort = false;
 
-      //  Unity Methods   ------------------------------
+      [SerializeField]
+      private bool _isRotatingInEditMode = true;
 
+      //  Unity Methods   ------------------------------
       void OnEnable()
       {
          // This trickery is optional and for ease-of development.
          // Game makers can see the results of SOME changes during edit-time
-         EditorApplication.update += UpdateAlways;
+         EditorApplication.update += UpdateEditor;
       }
 
 
       void OnDisable()
       {
-         EditorApplication.update -= UpdateAlways;
+         EditorApplication.update -= UpdateEditor;
       }
 
 
@@ -85,6 +86,15 @@ namespace Beamable.Samples.ABC.Views
 
 
       //  Other Methods --------------------------------
+      protected void UpdateEditor()
+      {
+         if (_isRotatingInEditMode)
+         {
+            UpdateAlways();
+         }
+      }
+
+
       private void RenderGrowth()
       {
          if (_willSort)
@@ -179,15 +189,12 @@ namespace Beamable.Samples.ABC.Views
       //  Event Handlers -------------------------------
       private void UpdateAlways()
       {
-         if (_isRotating)
-         {
-            //Rotate faster as more is complete
-            Vector3 rangeOfRotation = _configuration.TreeViewRotationMax - _configuration.TreeViewRotationMin;
-            Vector3 nextRotation = rangeOfRotation * _growthPercentage + _configuration.TreeViewRotationMin;
-            _target.transform.eulerAngles += nextRotation;
+         //Rotate faster as more is complete
+         Vector3 rangeOfRotation = _configuration.TreeViewRotationMax - _configuration.TreeViewRotationMin;
+         Vector3 nextRotation = rangeOfRotation * _growthPercentage + _configuration.TreeViewRotationMin;
+         _target.transform.eulerAngles += nextRotation;
 
-            RenderGrowth();
-         }
+         RenderGrowth();
       }
    }
 }
