@@ -43,9 +43,6 @@ namespace Beamable.Samples.ABC.Views
       [SerializeField]
       private PostProcessingView _postProcessingView = null;
 
-
-
-
       /// <summary>
       /// This list is created and sorted at edit time, and used
       /// at runtime to 'grow' the tree from bottom to top.
@@ -67,15 +64,19 @@ namespace Beamable.Samples.ABC.Views
       //  Unity Methods   ------------------------------
       void OnEnable()
       {
+#if UNITY_EDITOR
          // This trickery is optional and for ease-of development.
          // Game makers can see the results of SOME changes during edit-time
          EditorApplication.update += UpdateEditor;
+#endif
       }
 
 
       void OnDisable()
       {
+#if UNITY_EDITOR
          EditorApplication.update -= UpdateEditor;
+#endif
       }
 
 

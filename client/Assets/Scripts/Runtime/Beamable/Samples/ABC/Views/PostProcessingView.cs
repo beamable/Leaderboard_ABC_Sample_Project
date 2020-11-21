@@ -39,13 +39,17 @@ namespace Beamable.Samples.ABC.Views
       {
          // This trickery is optional and for ease-of development.
          // Game makers can see the results of SOME changes during edit-time
+#if UNITY_EDITOR
          EditorApplication.update += UpdateAlways;
+#endif
       }
 
 
       void OnDisable()
       {
+#if UNITY_EDITOR
          EditorApplication.update -= UpdateAlways;
+#endif
       }
 
 
