@@ -14,6 +14,9 @@ This sample project demonstrates specific [Beamable](https://beamable.com/) feat
 * `client/Assets/3rdParty/` - Dependency asset files for the project
 * `client/Packages/` - Dependency package files for the project
 
+**Beamable SDK**
+* **Included**: This project includes the Beamable SDK for Unity
+* **Version**: The latest public release as of each GIT commit
 
 # Microservices ABC Sample Project
 ![Logo](client/Assets/Art/Textures/ReadMeIcon.png)
