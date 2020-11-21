@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Beamable.Samples.ABC.Core
+namespace Beamable.Samples.ABC.Animation
 {
    /// <summary>
-   /// Store commonly reused functionality for programmatica animation (tweening)
+   /// Store commonly reused functionality 
+   /// for programmatic animation (tweening)
    /// </summary>
    public static class TweenHelper
    {
@@ -32,7 +33,6 @@ namespace Beamable.Samples.ABC.Core
          }
       }
 
-
       /// <summary>
       /// Fades opacity of a 3D object over time.
       /// </summary>
@@ -48,7 +48,8 @@ namespace Beamable.Samples.ABC.Core
       }
 
       /// <summary>
-      /// Changes color of a 3D object temporarily. (E.g. Flicker red to indicate taking damage)
+      /// Changes color of a 3D object temporarily. 
+      /// (E.g. Flicker red to indicate taking damage)
       /// </summary>
       public static void RenderersDoColorFlicker(List<Renderer> renderers, Color color, float duration)
       {
@@ -65,15 +66,28 @@ namespace Beamable.Samples.ABC.Core
          }
       }
 
-      public static void TransformDOBlendableScaleBy(GameObject targetGo, Vector3 fromPosition, Vector3 toPosition, float duration)
+      /// <summary>
+      /// Move a <see cref="GameObject"/>
+      /// </summary>
+      /// <param name="targetGo"></param>
+      /// <param name="fromPosition"></param>
+      /// <param name="toPosition"></param>
+      /// <param name="duration"></param>
+      public static void TransformDOBlendableMoveBy(GameObject targetGo, Vector3 fromPosition, Vector3 toPosition, float duration)
       {
-         targetGo.transform.DOBlendableScaleBy(fromPosition, 0);
-         targetGo.transform.DOBlendableScaleBy(toPosition, duration).
+         targetGo.transform.DOBlendableMoveBy(fromPosition, 0);
+         targetGo.transform.DOBlendableMoveBy(toPosition, duration).
             SetDelay(0.01f).
             SetEase(Ease.InBounce);
-
       }
 
+      /// <summary>
+      /// Scale a <see cref="GameObject"/>
+      /// </summary>
+      /// <param name="targetGo"></param>
+      /// <param name="fromScale"></param>
+      /// <param name="toScale"></param>
+      /// <param name="duration"></param>
       public static void TransformDoScale(GameObject targetGo, Vector3 fromScale, Vector3 toScale, float duration)
       {
          targetGo.transform.DOScale(fromScale, 0);

@@ -7,27 +7,16 @@ using DisruptorBeam.Stats;
 using System;
 using System.Collections;
 using UnityEngine;
+using static Beamable.Samples.ABC.ABCConstants;
 
 namespace Beamable.Samples.ABC
 {
    /// <summary>
-   /// The main entry point for in-game logic for the primary game scene.
-   /// 
+   /// Handles the main scene logic: Game
    /// </summary>
    public class GameSceneManager : MonoBehaviour
    {
-      //  Class Fields ---------------------------------
-      public enum GameState
-      {
-         PreGame,
-         Game,
-         PostGame
-      }
-
-      private const int UnsetValue = -1;
-
       //  Fields ---------------------------------------
-
       [SerializeField]
       private Configuration _configuration = null;
 
@@ -56,8 +45,7 @@ namespace Beamable.Samples.ABC
       /// <summary>
       /// Calculated each time the main menu opens.
       /// </summary>
-      private int _lastGlobalHighScore = UnsetValue;
-    
+      private int _lastGlobalHighScore = ABCConstants.UnsetValue;
 
       //  Unity Methods   ------------------------------
       protected void Start ()
@@ -201,7 +189,7 @@ namespace Beamable.Samples.ABC
 
       private void CurrentScoreStatBehaviour_OnStatReceived(string value)
       {
-         if (_lastGlobalHighScore == UnsetValue)
+         if (_lastGlobalHighScore == ABCConstants.UnsetValue)
          {
             return;
          }

@@ -15,14 +15,14 @@ MonoBehaviour:
   _introSceneName: 1.Intro
   _gameSceneName: 2.Game
   _leaderboardSceneName: 3.Leaderboard
-  _delayBeforeLoadScene: 0.5
-  _delayFadeInUI: 0.25
+  _delayBeforeLoadScene: 0.1
   _treeViewRotationMin: {x: 0, y: 0.25, z: 0}
   _treeViewRotationMax: {x: 0, y: 0.5, z: 0}
-  _totalClicksMin: 5
-  _totalClicksMax: 25
+  _delayFadeInUI: 0.25
+  _delayFadeInRoundedCube: 1
+  _gameDuration: 5
+  _pregameDuration: 3.9
   _leaderboardMinRowCount: 10
-  _delay2BeforeBackswing: 0.25
-  _delay3BeforeForeswing: 1
-  _delay4BeforeTakeDamage: 0.5
-  _delay5BeforePointsView: 0.7
+  _highScoreDefault: 30
+  _mockRandomScoreMin: 0
+  _mockRandomScoreMax: 25

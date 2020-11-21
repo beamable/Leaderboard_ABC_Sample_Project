@@ -5,11 +5,10 @@ using UnityEngine.UI;
 namespace Beamable.Samples.ABC
 {
    /// <summary>
-   /// Handles the Leaderboard scene logic.
+   /// Handles the main scene logic: Leaderboard
    /// </summary>
    public class LeaderboardSceneManager : MonoBehaviour
    {
-
       //  Fields ---------------------------------------
       [SerializeField]
       private Configuration _configuration = null;
@@ -17,13 +16,13 @@ namespace Beamable.Samples.ABC
       [SerializeField]
       private Button _closeButton = null;
 
+
       //  Unity Methods   ------------------------------
       protected void Start()
       {
          _closeButton.onClick.AddListener(CloseButton_OnClicked);
       }
 
-      //  Other Methods --------------------------------
 
       //  Event Handlers -------------------------------
       private void CloseButton_OnClicked()

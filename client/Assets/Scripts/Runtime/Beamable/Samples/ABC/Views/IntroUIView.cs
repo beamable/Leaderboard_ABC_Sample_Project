@@ -1,4 +1,4 @@
-﻿using Beamable.Samples.ABC.Core;
+﻿using Beamable.Samples.ABC.Animation;
 using Beamable.Samples.ABC.Data;
 using System.Collections.Generic;
 using TMPro;
@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Beamable.Samples.ABC.Views
 {
    /// <summary>
-   /// Handles the view concerns for the intro scene UI elements.
+   /// Handles the audio/graphics rendering logic: Intro UI
    /// </summary>
    public class IntroUIView : MonoBehaviour
    {
@@ -50,9 +50,5 @@ namespace Beamable.Samples.ABC.Views
       {
          TweenHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
       }
-
-      //  Other Methods --------------------------------
-
-      //  Event Handlers -------------------------------
    }
 }

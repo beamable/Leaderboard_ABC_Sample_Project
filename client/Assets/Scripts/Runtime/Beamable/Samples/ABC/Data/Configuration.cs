@@ -38,7 +38,7 @@ namespace Beamable.Samples.ABC.Data
 
       //  Fields ---------------------------------------
 
-      [Header("Scenes")]
+      [Header("Scene Names")]
       [SerializeField]
       private string _introSceneName = "";
 
@@ -84,6 +84,5 @@ namespace Beamable.Samples.ABC.Data
 
       [SerializeField]
       private float _mockRandomScoreMax = 25;
-
    }
 }

@@ -18,6 +18,15 @@ namespace Beamable.Samples.ABC
    public static class MockDataCreator
    {
       //  Other Methods --------------------------------
+
+      /// <summary>
+      /// Because this game is NOT a production game with real users, it is helpful
+      /// to populate the Leaderboard with some mock users scores for
+      /// cosmetic reasons
+      /// </summary>
+      /// <param name="disruptorEngine"></param>
+      /// <param name="leaderboardContent"></param>
+      /// <param name="configuration"></param>
       public static async void PopulateLeaderboardWithMockData(IDisruptorEngine disruptorEngine,
          LeaderboardContent leaderboardContent, Configuration configuration)
       {
@@ -70,6 +79,11 @@ namespace Beamable.Samples.ABC
          await disruptorEngine.ApplyToken(user.Token);
       }
 
+      /// <summary>
+      /// The the user alias which is visible in the Leaderboard Scene
+      /// </summary>
+      /// <param name="statsService"></param>
+      /// <param name="alias"></param>
       public static async void SetCurrentUserAlias(StatsService statsService, string alias)
       {
          await statsService.SetStats("public", new Dictionary<string, string>()
@@ -77,6 +91,7 @@ namespace Beamable.Samples.ABC
                { "alias", alias },
             });
       }
+
 
       /// <summary>
       /// Inspired by http://developer.qbapi.com/Generate-a-Random-Username.aspx

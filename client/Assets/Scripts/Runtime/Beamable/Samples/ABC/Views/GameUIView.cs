@@ -1,4 +1,4 @@
-﻿using Beamable.Samples.ABC.Core;
+﻿using Beamable.Samples.ABC.Animation;
 using Beamable.Samples.ABC.Data;
 using System.Collections.Generic;
 using TMPro;
@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Beamable.Samples.ABC.Views
 {
    /// <summary>
-   /// Handles the view concerns for the game scene UI elements.
+   /// Handles the audio/graphics rendering logic: Game
    /// </summary>
    public class GameUIView : MonoBehaviour
    {
@@ -38,23 +38,7 @@ namespace Beamable.Samples.ABC.Views
       protected void Start()
       {
          _statusText.text = "";
-
-         _backButton.onClick.AddListener(BackButton_OnClicked);
-         _clickMeButton.onClick.AddListener(ClickMeButton_OnClicked);
-
          TweenHelper.CanvasGroupsDoFade(_canvasGroups, 0, 1, 1, 0, _configuration.DelayFadeInUI);
-      }
-
-      //  Other Methods --------------------------------
-
-      //  Event Handlers -------------------------------
-      private void BackButton_OnClicked()
-      {
-      }
-
-
-      private void ClickMeButton_OnClicked()
-      {
       }
    }
 }

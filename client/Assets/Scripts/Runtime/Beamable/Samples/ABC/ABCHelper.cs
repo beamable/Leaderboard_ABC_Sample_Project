@@ -13,7 +13,6 @@ namespace Beamable.Samples.ABC
    public static class ABCHelper
    {
       //  Other Methods --------------------------------
-
       public static IEnumerator LoadScene_Coroutine(string sceneName, float delayBeforeLoading)
       {
          SoundManager.Instance.PlayAudioClip(SoundConstants.Click01);
@@ -22,10 +21,12 @@ namespace Beamable.Samples.ABC
          SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
       }
 
+
       public static string GetAttackMissedText()
       {
          return "Miss";
       }
+
 
       public static string GetAttackButtonText(int heroWeaponIndex)
       {
@@ -90,7 +91,7 @@ namespace Beamable.Samples.ABC
 
             text += ABCHelper.GetBulletList("Resources", new List<string> 
             {
-               "Overview: <u><link=https://docs.beamable.com/>docs.beamable.com</link></u>",
+               "Overview: <u><link=https://docs.beamable.com/docs/leaderboard-flow-sample>Leaderboard Flow Sample</link></u>",
                "Feature: <u><link=https://docs.beamable.com/docs/leaderboard-flow>Leaderboard Flow</link></u>",
                "Feature: <u><link=https://docs.beamable.com/docs/stats>Stats</link></u>"
             });
@@ -147,6 +148,7 @@ namespace Beamable.Samples.ABC
          return GetRoundedScore(Double.Parse(score));
       }
 
+
       private static string BeamableSDKInstallInstructionsText
       {
          get
@@ -163,6 +165,7 @@ namespace Beamable.Samples.ABC
          }
       }
 
+
       private static string GetBulletList(string title, List<string> items)
       {
          string text = "";
@@ -176,6 +179,7 @@ namespace Beamable.Samples.ABC
          return text;
       }
 
+
       /// <summary>
       /// Return a random item from the list. 
       /// This provides cosmetic variety.
@@ -185,6 +189,5 @@ namespace Beamable.Samples.ABC
          int index = UnityEngine.Random.Range(0, items.Count);
          return items[index];
       }
-
    }
 }

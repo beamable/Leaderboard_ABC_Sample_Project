@@ -8,7 +8,7 @@ using UnityEditor;
 namespace Beamable.Samples.ABC.Views
 {
    /// <summary>
-   /// Handles the view concerns for the post processing <see cref="Volume"/>. 
+   /// Handles the audio/graphics rendering logic: Post processing <see cref="Volume"/>. 
    /// </summary>
    [ExecuteAlways]
    public class PostProcessingView : MonoBehaviour
@@ -27,6 +27,7 @@ namespace Beamable.Samples.ABC.Views
          }
       }
 
+
       //  Fields ---------------------------------------
       [SerializeField]
       private Volume _volume = null;
@@ -41,18 +42,20 @@ namespace Beamable.Samples.ABC.Views
          EditorApplication.update += UpdateAlways;
       }
 
+
       void OnDisable()
       {
          EditorApplication.update -= UpdateAlways;
       }
+
 
       protected void Update()
       {
          UpdateAlways();
       }
 
-      //  Other Methods --------------------------------
 
+      //  Other Methods --------------------------------
       private void Render()
       {
          LensDistortion lensDistortion = null;
@@ -62,8 +65,8 @@ namespace Beamable.Samples.ABC.Views
          {
             lensDistortion.intensity.value = _intensity;
          }
-
       }
+
 
       //  Event Handlers -------------------------------
       private void UpdateAlways()

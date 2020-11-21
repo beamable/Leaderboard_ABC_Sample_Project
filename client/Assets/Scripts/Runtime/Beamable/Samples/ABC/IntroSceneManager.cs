@@ -13,11 +13,10 @@ using UnityEngine;
 namespace Beamable.Samples.ABC
 {
    /// <summary>
-   /// Handles the intro menu scene logic.
+   /// Handles the main scene logic: Intro
    /// </summary>
    public class IntroSceneManager : MonoBehaviour
    {
-
       //  Fields ---------------------------------------
 
       /// <summary>
@@ -105,6 +104,7 @@ namespace Beamable.Samples.ABC
          });
       }
 
+
       /// <summary>
       /// Set a highscore stat to the global high score. This is used to 
       /// calibrate the difficulty and rendering animations of the game.
@@ -164,6 +164,7 @@ namespace Beamable.Samples.ABC
          _introUIView.AboutBodyText = aboutBodyText;
          _introUIView.MenuCanvasGroup.interactable = _isConnected;
       }
+
 
       //  Event Handlers -------------------------------
       private void ConnectivityService_OnConnectivityChanged(bool isConnected)

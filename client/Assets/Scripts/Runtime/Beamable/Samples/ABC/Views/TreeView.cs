@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Beamable.Samples.ABC.Core;
+using Beamable.Samples.ABC.Animation;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -10,14 +10,13 @@ using UnityEditor;
 namespace Beamable.Samples.ABC.Views
 {
    /// <summary>
-   /// Handles the view concerns for the tree 
+   /// Handles the audio/graphics rendering logic: Tree 
    /// </summary>
    [ExecuteAlways]
    public class TreeView : MonoBehaviour
    {
       //  Properties -----------------------------------
-      private const float RoundedCubeDeltaY = 0.5f;
-
+      
       public float GrowthPercentage 
       {  
          get 
@@ -30,8 +29,6 @@ namespace Beamable.Samples.ABC.Views
             RenderGrowth();
          }
       }
-
-      
 
       //  Fields ---------------------------------------
       [SerializeField]
@@ -48,6 +45,7 @@ namespace Beamable.Samples.ABC.Views
 
       [SerializeField]
       private bool _isRotating = true;
+
 
       /// <summary>
       /// This list is created and sorted at edit time, and used
@@ -73,18 +71,20 @@ namespace Beamable.Samples.ABC.Views
          EditorApplication.update += UpdateAlways;
       }
 
+
       void OnDisable()
       {
          EditorApplication.update -= UpdateAlways;
       }
+
 
       protected void Update()
       {
          UpdateAlways();
       }
 
-      //  Other Methods --------------------------------
 
+      //  Other Methods --------------------------------
       private void RenderGrowth()
       {
          if (_willSort)
@@ -117,6 +117,7 @@ namespace Beamable.Samples.ABC.Views
          }
       }
 
+
       /// <summary>
       /// Store original positions to help animation
       /// </summary>
@@ -135,10 +136,12 @@ namespace Beamable.Samples.ABC.Views
          return positionsByIndex;
       }
 
+
       public static List<GameObject> SortByDistance(List<GameObject> gos, Vector3 measureFrom)
       {
          return gos.OrderBy(x => Vector3.Distance(x.transform.position, measureFrom)).ToList();
       }
+
 
       private void SetRoundedCubeActive(int index, bool isActive)
       {
@@ -153,9 +156,9 @@ namespace Beamable.Samples.ABC.Views
                currentGo.SetActive(true);
 
                // Move from DOWN to UP. Simulates "Growth"
-               TweenHelper.TransformDOBlendableScaleBy(currentGo,
-                  new Vector3(0, -RoundedCubeDeltaY, 0),
-                  new Vector3(0, RoundedCubeDeltaY, 0),
+               TweenHelper.TransformDOBlendableMoveBy(currentGo,
+                  new Vector3(0, -ABCConstants.RoundedCubeMoveDeltaY, 0),
+                  new Vector3(0, ABCConstants.RoundedCubeMoveDeltaY, 0),
                   _configuration.DelayFadeInRoundedCube);
 
                // Scale from 0 to 100%. Simulates "Growth"
