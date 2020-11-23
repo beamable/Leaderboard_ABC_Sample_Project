@@ -5,6 +5,7 @@ This sample project demonstrates specific [Beamable](https://beamable.com/) feat
 **Project Configuration**
 * `Unity Target` - Standalone MAC/PC
 * `Unity Version` - 2019.4.14f1 or above
+* `Unity Rendering` - [Universal Render Pipeline (URP)](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.2/manual/index.html)
 
 **Project Structure**
 * `README.md` - This README file
