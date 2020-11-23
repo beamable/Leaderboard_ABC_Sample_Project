@@ -26,7 +26,7 @@ Button clicks grow trees. Click as many times as possible within
 the time limit. This sample project allows game makers to 
 understand and apply the benefits of the Leaderboard Flow in 
 game development.
-<br>[Leaderboard - Sample Project](https://docs.beamable.com/docs/leaderboard-flow-sample-project)
+<br>[Leaderboard - Sample Project](https://docs.beamable.com/docs/leaderboard-flow-sample)
 
 ### What is Beamable?
 Beamable is the low-code option for rapidly adding social, 
