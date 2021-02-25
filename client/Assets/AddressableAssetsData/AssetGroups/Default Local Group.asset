@@ -16,11 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 03b0e1a4de85fe4469f73f603b4075e2
-  m_SerializeEntries:
-  - m_GUID: f819a6beb22c04c8d9f8222f930252b5
-    m_Address: Assets/DisruptorEngine/DefaultAssets/currency/icon.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 23ae38ef723ad14448ed21b3adb1b4a9, type: 2}
   m_SchemaSet:
