@@ -8,9 +8,9 @@ namespace Beamable.Samples.ABC.Data
    /// </summary>
    [CreateAssetMenu(
       fileName = Title,
-      menuName = ContentConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_SAMPLES + "/" +
-      "Microservices/Create New " + Title,
-      order = ContentConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_ORDER_1)]
+      menuName = BeamableConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_SAMPLES + "/" +
+                 "Microservices/Create New " + Title,
+      order = BeamableConstants.MENU_ITEM_PATH_ASSETS_BEAMABLE_ORDER_1)]
    public class Configuration : ScriptableObject
    {
       //  Constants  -----------------------------------

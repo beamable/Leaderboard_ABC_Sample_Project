@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.disruptorbeam.engine": {
-      "version": "0.0.125",
+    "com.beamable": {
+      "version": "0.0.0-PREVIEW.NIGHTLY-202102241800",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -9,7 +9,7 @@
         "com.unity.addressables": "1.2.4",
         "com.unity.textmeshpro": "1.4.1"
       },
-      "url": "https://nexus.beamable.com/nexus/content/repositories/unity"
+      "url": "https://nexus.beamable.com/nexus/content/repositories/unity-all"
     },
     "com.unity.addressables": {
       "version": "1.2.4",

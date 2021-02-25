@@ -1,5 +1,4 @@
-﻿using DisruptorBeam;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Beamable.Features.Examples.Stats
@@ -9,30 +8,30 @@ namespace Beamable.Features.Examples.Stats
       //  Unity Methods   ------------------------------
       protected void Start()
       {
-         DisruptorEngine.Instance.Then(de =>
+         Beamable.API.Instance.Then(beamableAPI =>
          {
-            UseStatCoding(de);
+            UseStatCoding(beamableAPI);
          });
       }
 
       //  Other Methods   ------------------------------
-      private async void UseStatCoding(IDisruptorEngine de)
+      private async void UseStatCoding(IBeamableAPI beamableAPI)
       {
          string statKey = "MyExampleStat";
          string access = "public";
          string domain = "client";
          string type = "player";
-         long id = de.User.id;
+         long id = beamableAPI.User.id;
 
          // Set Value
          Dictionary<string, string> setStats =
             new Dictionary<string, string>() { { statKey, "99" } };
 
-         await de.Stats.SetStats(access, setStats);
+         await beamableAPI.Stats.SetStats(access, setStats);
 
          // Get Value
          Dictionary<string, string> getStats = 
-            await de.Stats.GetStats(domain, access, type, id);
+            await beamableAPI.Stats.GetStats(domain, access, type, id);
 
          string myExampleStatValue = "";
          getStats.TryGetValue(statKey, out myExampleStatValue);

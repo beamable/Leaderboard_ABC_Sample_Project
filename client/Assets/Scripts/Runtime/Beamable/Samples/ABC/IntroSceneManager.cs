@@ -1,13 +1,13 @@
 ﻿using Beamable.Samples.ABC.Data;
 using Beamable.Samples.ABC.Views;
-using Core.Platform.SDK.Leaderboard;
-using Core.Platform.SDK.Stats;
-using DisruptorBeam;
-using DisruptorBeam.Content;
-using DisruptorBeam.Stats;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Beamable.Api.Leaderboard;
+using Beamable.Api.Stats;
+using Beamable.Common.Api.Leaderboards;
+using Beamable.Common.Leaderboards;
+using Beamable.Stats;
 using UnityEngine;
 
 namespace Beamable.Samples.ABC
@@ -38,7 +38,7 @@ namespace Beamable.Samples.ABC
       [SerializeField]
       private StatBehaviour _highScoreStatBehaviour = null;
 
-      private IDisruptorEngine _disruptorEngine = null;
+      private IBeamableAPI _beamableAPI = null;
       private bool _isConnected = false;
       private bool _isBeamableSDKInstalled = false;
       private string _isBeamableSDKInstalledErrorMessage = "";
@@ -55,10 +55,10 @@ namespace Beamable.Samples.ABC
 
       protected void OnDestroy()
       {
-         DisruptorEngine.Instance.Then(de =>
+         Beamable.API.Instance.Then(beamableAPI =>
          {
-            _disruptorEngine = null;
-            de.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
+            _beamableAPI = null;
+            beamableAPI.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
          });
       }
 
@@ -71,27 +71,27 @@ namespace Beamable.Samples.ABC
       private void SetupBeamable()
       {
          // Attempt Connection to Beamable
-         DisruptorEngine.Instance.Then(de =>
+         Beamable.API.Instance.Then(beamableAPI =>
          {
             try
             {
-               _disruptorEngine = de;
+               _beamableAPI = beamableAPI;
                _isBeamableSDKInstalled = true;
 
                // Handle any changes to the internet connectivity
-               _disruptorEngine.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
-               ConnectivityService_OnConnectivityChanged(_disruptorEngine.ConnectivityService.HasConnectivity);
+               _beamableAPI.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
+               ConnectivityService_OnConnectivityChanged(_beamableAPI.ConnectivityService.HasConnectivity);
 
                if (IsDemoMode)
                {
                   //Set my player's name
-                  MockDataCreator.SetCurrentUserAlias(_disruptorEngine.Stats, "This_is_you:)");
+                  MockDataCreator.SetCurrentUserAlias(_beamableAPI.Stats, "This_is_you:)");
 
                   //Populate the leaderboard with at least 10 mock users/scores
-                  PopulateLeaderboardWithMockData(_disruptorEngine.LeaderboardService);
+                  PopulateLeaderboardWithMockData(_beamableAPI.LeaderboardService);
 
                   //Set the Beamable stat(s) to have initial values
-                  PopulateStats(_disruptorEngine.Stats, _disruptorEngine.LeaderboardService);
+                  PopulateStats(_beamableAPI.Stats, _beamableAPI.LeaderboardService);
                }
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Beamable.Samples.ABC
       private async void PopulateLeaderboardWithMockData(LeaderboardService leaderboardService)
       {
          LeaderboardContent leaderboardContent = await _leaderboardRef.Resolve();
-         MockDataCreator.PopulateLeaderboardWithMockData(_disruptorEngine, leaderboardContent, _configuration);
+         MockDataCreator.PopulateLeaderboardWithMockData(_beamableAPI, leaderboardContent, _configuration);
       }
 
 
@@ -152,7 +152,7 @@ namespace Beamable.Samples.ABC
          long dbid = 0;
          if (_isConnected)
          {
-            dbid = _disruptorEngine.User.id;
+            dbid = _beamableAPI.User.id;
          }
 
          string aboutBodyText = ABCHelper.GetIntroAboutBodyText(

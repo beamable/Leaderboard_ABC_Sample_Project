@@ -30,9 +30,9 @@ namespace Beamable.Samples.ABC
 		}
 
 		[MenuItem(
-			ContentConstants.MENU_ITEM_PATH_WINDOW_BEAMABLE_SAMPLES + "/Leaderboard/" +
-			ContentConstants.OPEN + " " + Title,
-			priority = ContentConstants.MENU_ITEM_PATH_WINDOW_PRIORITY_4)]
+			BeamableConstants.MENU_ITEM_PATH_WINDOW_BEAMABLE_SAMPLES + "/Leaderboard/" +
+			BeamableConstants.OPEN + " " + Title,
+			priority = BeamableConstants.MENU_ITEM_PATH_WINDOW_PRIORITY_4)]
 		private static Readme SelectSpecificReadmeMenuItem()
 		{
 			// Reset SessionState if/when MenuItem is used

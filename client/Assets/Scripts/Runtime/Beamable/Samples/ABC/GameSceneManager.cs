@@ -1,11 +1,10 @@
 ﻿using Beamable.Samples.ABC.Audio;
 using Beamable.Samples.ABC.Data;
 using Beamable.Samples.ABC.Views;
-using DisruptorBeam;
-using DisruptorBeam.Content;
-using DisruptorBeam.Stats;
 using System;
 using System.Collections;
+using Beamable.Common.Leaderboards;
+using Beamable.Stats;
 using UnityEngine;
 using static Beamable.Samples.ABC.ABCConstants;
 
@@ -39,7 +38,7 @@ namespace Beamable.Samples.ABC
       private Coroutine _runGameCoroutine;
       private float _gameTimeRemaining = 0;
       private LeaderboardContent _leaderboardContent;
-      private IDisruptorEngine _disruptorEngine = null;
+      private IBeamableAPI _beamableAPI = null;
       private GameState _gameState = GameState.PreGame;
 
       /// <summary>
@@ -72,11 +71,11 @@ namespace Beamable.Samples.ABC
       {
          _leaderboardContent = await _leaderboardRef.Resolve();
 
-         await DisruptorEngine.Instance.Then(de =>
+         await Beamable.API.Instance.Then(beamableAPI =>
          {
             try
             {
-               _disruptorEngine = de;
+               _beamableAPI = beamableAPI;
                RestartGame();
 
             }
@@ -154,7 +153,7 @@ namespace Beamable.Samples.ABC
                $" in {gameDuration} seconds!\nCheck the Leaderboard.";
 
             double finalScore = ABCHelper.GetRoundedScore(_currentScoreStatBehaviour.Value);
-            _disruptorEngine.LeaderboardService.SetScore(_leaderboardContent.Id, finalScore);
+            _beamableAPI.LeaderboardService.SetScore(_leaderboardContent.Id, finalScore);
          }
       }
 

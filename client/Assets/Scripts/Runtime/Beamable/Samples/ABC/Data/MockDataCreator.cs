@@ -1,13 +1,13 @@
-﻿using Beamable.Common;
-using Beamable.Samples.ABC.Data;
-using Core.Platform.SDK.Auth;
-using Core.Platform.SDK.Leaderboard;
-using Core.Platform.SDK.Stats;
-using DisruptorBeam;
-using DisruptorBeam.Content;
-using System;
+﻿using Beamable.Samples.ABC.Data;
 using System.Collections.Generic;
 using System.Linq;
+using Beamable.Api.Auth;
+using Beamable.Api.Leaderboard;
+using Beamable.Api.Stats;
+using Beamable.Common.Api.Leaderboards;
+using Beamable.Common.Leaderboards;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Beamable.Samples.ABC
 {
@@ -24,18 +24,18 @@ namespace Beamable.Samples.ABC
       /// to populate the Leaderboard with some mock users scores for
       /// cosmetic reasons
       /// </summary>
-      /// <param name="disruptorEngine"></param>
+      /// <param name="beamableAPI"></param>
       /// <param name="leaderboardContent"></param>
       /// <param name="configuration"></param>
-      public static async void PopulateLeaderboardWithMockData(IDisruptorEngine disruptorEngine,
+      public static async void PopulateLeaderboardWithMockData(IBeamableAPI beamableAPI,
          LeaderboardContent leaderboardContent, Configuration configuration)
       {
-         LeaderboardService leaderboardService = disruptorEngine.LeaderboardService;
-         StatsService statsService = disruptorEngine.Stats;
-         IAuthService authService = disruptorEngine.AuthService;
+         LeaderboardService leaderboardService = beamableAPI.LeaderboardService;
+         StatsService statsService = beamableAPI.Stats;
+         IAuthService authService = beamableAPI.AuthService;
 
          // Capture current user
-         var localDbid = disruptorEngine.User.id;
+         var localDbid = beamableAPI.User.id;
 
          // Check Leaderboard
          LeaderBoardView leaderboardView = await leaderboardService.GetBoard(leaderboardContent.Id, 0, 100);
@@ -53,7 +53,7 @@ namespace Beamable.Samples.ABC
             {
                // Create NEW user
                // Login as NEW user (Required before using "SetScore")
-               await authService.CreateUser().FlatMap(disruptorEngine.ApplyToken);
+               await authService.CreateUser().FlatMap(beamableAPI.ApplyToken);
 
                // Rename NEW user
                string alias = MockDataCreator.CreateNewRandomAlias("User");
@@ -74,9 +74,9 @@ namespace Beamable.Samples.ABC
          Debug.Log($"PopulateLeaderboardWithMockData() AFTER, rowCount={currentRowCountAfter}");
 
          // Login again as local user
-         var deviceUsers = await disruptorEngine.GetDeviceUsers();
+         var deviceUsers = await beamableAPI.GetDeviceUsers();
          var user = deviceUsers.First(bundle => bundle.User.id == localDbid);
-         await disruptorEngine.ApplyToken(user.Token);
+         await beamableAPI.ApplyToken(user.Token);
       }
 
       /// <summary>

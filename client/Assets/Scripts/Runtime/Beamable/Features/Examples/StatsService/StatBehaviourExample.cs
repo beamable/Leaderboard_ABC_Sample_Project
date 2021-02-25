@@ -1,4 +1,4 @@
-﻿using DisruptorBeam.Stats;
+﻿using Beamable.Stats;
 using UnityEngine;
 
 namespace Beamable.Features.Examples.Stats
