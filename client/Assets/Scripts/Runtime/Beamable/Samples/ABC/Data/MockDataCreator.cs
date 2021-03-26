@@ -31,7 +31,7 @@ namespace Beamable.Samples.ABC
          LeaderboardContent leaderboardContent, Configuration configuration)
       {
          LeaderboardService leaderboardService = beamableAPI.LeaderboardService;
-         StatsService statsService = beamableAPI.Stats;
+         StatsService statsService = beamableAPI.StatsService;
          IAuthService authService = beamableAPI.AuthService;
 
          // Capture current user

@@ -85,13 +85,13 @@ namespace Beamable.Samples.ABC
                if (IsDemoMode)
                {
                   //Set my player's name
-                  MockDataCreator.SetCurrentUserAlias(_beamableAPI.Stats, "This_is_you:)");
+                  MockDataCreator.SetCurrentUserAlias(_beamableAPI.StatsService, "This_is_you:)");
 
                   //Populate the leaderboard with at least 10 mock users/scores
                   PopulateLeaderboardWithMockData(_beamableAPI.LeaderboardService);
 
                   //Set the Beamable stat(s) to have initial values
-                  PopulateStats(_beamableAPI.Stats, _beamableAPI.LeaderboardService);
+                  PopulateStats(_beamableAPI.StatsService, _beamableAPI.LeaderboardService);
                }
             }
             catch (Exception e)
