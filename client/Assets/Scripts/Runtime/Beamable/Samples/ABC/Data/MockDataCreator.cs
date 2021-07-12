@@ -96,7 +96,7 @@ namespace Beamable.Samples.ABC
       /// <summary>
       /// Inspired by http://developer.qbapi.com/Generate-a-Random-Username.aspx
       /// </summary>
-      private static string CreateNewRandomAlias(string prependName)
+      public static string CreateNewRandomAlias(string prependName)
       {
          string alias = prependName;
 

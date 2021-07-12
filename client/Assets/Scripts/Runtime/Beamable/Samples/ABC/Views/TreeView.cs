@@ -62,7 +62,7 @@ namespace Beamable.Samples.ABC.Views
       private bool _isRotatingInEditMode = true;
 
       //  Unity Methods   ------------------------------
-      void OnEnable()
+      protected void OnEnable()
       {
 #if UNITY_EDITOR
          // This trickery is optional and for ease-of development.
@@ -71,12 +71,16 @@ namespace Beamable.Samples.ABC.Views
 #endif
       }
 
-
-      void OnDisable()
+      protected void OnDisable()
       {
 #if UNITY_EDITOR
          EditorApplication.update -= UpdateEditor;
 #endif
+      }
+
+      protected void Start()
+      {
+         GrowthPercentage = 0;
       }
 
 
@@ -109,7 +113,10 @@ namespace Beamable.Samples.ABC.Views
          }
 
          //Change effects during growth
-         _postProcessingView.Intensity = _growthPercentage;
+         if (_postProcessingView != null)
+         {
+            _postProcessingView.Intensity = _growthPercentage;
+         }
 
          //Toggle visibility during growth
          for (int i = 0; i < _roundedCubes.Count; i++)

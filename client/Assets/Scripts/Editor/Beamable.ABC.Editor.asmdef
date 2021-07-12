@@ -1,0 +1,21 @@
+{
+    "name": "Beamable.ABC.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1326347b8c2efa946b02a64aa7c9c0ae",
+        "GUID:a587356b361f1774ea440e4531ac3772",
+        "GUID:eb05fbaea19428b4aa7a30b6bb158513",
+        "GUID:3140025892ece41f1bca5bdb43c5b512"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
