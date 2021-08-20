@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace Beamable.Samples.ABC.Core
+namespace Beamable.Samples.Core.UI
 {
    /// <summary>
    /// Open a web browser for any <link=blah>text</link> in the source text.

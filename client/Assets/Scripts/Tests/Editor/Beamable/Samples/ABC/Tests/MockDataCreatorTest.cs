@@ -1,3 +1,4 @@
+using Beamable.Samples.Core.Data;
 using NUnit.Framework;
 
 namespace Beamable.Samples.ABC

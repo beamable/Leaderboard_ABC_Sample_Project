@@ -7,6 +7,8 @@ using Beamable.Api.Leaderboard;
 using Beamable.Api.Stats;
 using Beamable.Common.Api.Leaderboards;
 using Beamable.Common.Leaderboards;
+using Beamable.Samples.Core.Data;
+using Beamable.Samples.Core.Utilities;
 using Beamable.Stats;
 using UnityEngine;
 
@@ -125,7 +127,7 @@ namespace Beamable.Samples.ABC
          }
 
          // Set stat values to start a fresh game
-         highScore = ABCHelper.GetRoundedScore(highScore);
+         highScore = CoreHelper.GetRoundedScore(highScore);
          _highScoreStatBehaviour.SetCurrentValue(highScore.ToString());
          await _highScoreStatBehaviour.Write(highScore.ToString());
 
@@ -178,7 +180,7 @@ namespace Beamable.Samples.ABC
       {
          _introUIView.MenuCanvasGroup.interactable = false;
 
-         StartCoroutine(ABCHelper.LoadScene_Coroutine(_configuration.LeaderboardSceneName, 
+         StartCoroutine(CoreHelper.LoadScene_Coroutine(_configuration.LeaderboardSceneName, 
             _configuration.DelayBeforeLoadScene));
       }
 
@@ -187,7 +189,7 @@ namespace Beamable.Samples.ABC
       {
          _introUIView.MenuCanvasGroup.interactable = false;
 
-         StartCoroutine(ABCHelper.LoadScene_Coroutine(_configuration.GameSceneName, 
+         StartCoroutine(CoreHelper.LoadScene_Coroutine(_configuration.GameSceneName, 
             _configuration.DelayBeforeLoadScene));
       }
    }

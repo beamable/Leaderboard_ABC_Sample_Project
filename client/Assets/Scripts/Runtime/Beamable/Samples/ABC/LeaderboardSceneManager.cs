@@ -1,4 +1,5 @@
 ﻿using Beamable.Samples.ABC.Data;
+using Beamable.Samples.Core.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,7 @@ namespace Beamable.Samples.ABC
       //  Event Handlers -------------------------------
       private void CloseButton_OnClicked()
       {
-         StartCoroutine(ABCHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
+         StartCoroutine(CoreHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
       }
    }

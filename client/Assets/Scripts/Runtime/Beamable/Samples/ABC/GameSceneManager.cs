@@ -1,9 +1,10 @@
-﻿using Beamable.Samples.ABC.Audio;
-using Beamable.Samples.ABC.Data;
+﻿using Beamable.Samples.ABC.Data;
 using Beamable.Samples.ABC.Views;
 using System;
 using System.Collections;
 using Beamable.Common.Leaderboards;
+using Beamable.Samples.Core.Audio;
+using Beamable.Samples.Core.Utilities;
 using Beamable.Stats;
 using UnityEngine;
 using static Beamable.Samples.ABC.ABCConstants;
@@ -114,7 +115,7 @@ namespace Beamable.Samples.ABC
             float pregameRemaining = pregameDuration - pregameElapsed;
 
             //Show as "3.2 seconds"
-            _gameUIView.StatusText.text = $"Prepare to click!\nStarting in {ABCHelper.GetRoundedTime(pregameRemaining)}...";
+            _gameUIView.StatusText.text = $"Prepare to click!\nStarting in {CoreHelper.GetRoundedTime(pregameRemaining)}...";
             yield return new WaitForEndOfFrame();
          }
 
@@ -152,7 +153,7 @@ namespace Beamable.Samples.ABC
             _gameUIView.StatusText.text = $"{_currentScoreStatBehaviour.Value} clicks" +
                $" in {gameDuration} seconds!\nCheck the Leaderboard.";
 
-            double finalScore = ABCHelper.GetRoundedScore(_currentScoreStatBehaviour.Value);
+            double finalScore = CoreHelper.GetRoundedScore(_currentScoreStatBehaviour.Value);
             _beamableAPI.LeaderboardService.SetScore(_leaderboardContent.Id, finalScore);
          }
       }
@@ -181,7 +182,7 @@ namespace Beamable.Samples.ABC
          //TEMP - restart game
          //RestartGame();
 
-         StartCoroutine(ABCHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
+         StartCoroutine(CoreHelper.LoadScene_Coroutine(_configuration.IntroSceneName,
             _configuration.DelayBeforeLoadScene));
       }
 
@@ -198,11 +199,11 @@ namespace Beamable.Samples.ABC
          _treeView.GrowthPercentage = Mathf.Clamp01(growthPercentageOf100 / 100);
 
          // Play sound that increases in pitch as GrowthPercentage increases
-         float pitch = ABCHelper.GetAudioPitchByGrowthPercentage(_treeView.GrowthPercentage);
+         float pitch = CoreHelper.GetAudioPitchByGrowthPercentage(_treeView.GrowthPercentage);
          SoundManager.Instance.PlayAudioClip(SoundConstants.Click02, pitch);
 
          _gameUIView.StatusText.text = $"{_currentScoreStatBehaviour.Value} clicks.\n" +
-            $"{ABCHelper.GetRoundedTime(_gameTimeRemaining)} secs left! Keep going!";
+            $"{CoreHelper.GetRoundedTime(_gameTimeRemaining)} secs left! Keep going!";
 
          //Debug.Log("_treeView.GrowthPercentage() : " + _treeView.GrowthPercentage);
       }

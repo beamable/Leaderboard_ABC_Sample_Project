@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Beamable.Samples.ABC.Animation
+namespace Beamable.Samples.Core.Utilities
 {
    /// <summary>
    /// Store commonly reused functionality 

@@ -6,10 +6,11 @@ using Beamable.Api.Leaderboard;
 using Beamable.Api.Stats;
 using Beamable.Common.Api.Leaderboards;
 using Beamable.Common.Leaderboards;
+using Beamable.Samples.Core.Utilities;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Beamable.Samples.ABC
+namespace Beamable.Samples.Core.Data
 {
    /// <summary>
    /// Create mock data. This is appropriate for a sample project, but not for
@@ -61,7 +62,7 @@ namespace Beamable.Samples.ABC
            
                // Submit mock score for NEW user
                double mockScore = UnityEngine.Random.Range(configuration.MockRandomScoreMin, configuration.MockRandomScoreMax);
-               mockScore = ABCHelper.GetRoundedScore(mockScore);
+               mockScore = CoreHelper.GetRoundedScore(mockScore);
                await leaderboardService.SetScore(leaderboardContent.Id, mockScore);
 
                Debug.Log($"PopulateLeaderboardWithMockData() Created Mock User. Alias={alias}, score:{mockScore}.");

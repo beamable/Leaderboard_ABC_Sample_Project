@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Beamable.Samples.ABC.Animation;
+using Beamable.Samples.Core.Utilities;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

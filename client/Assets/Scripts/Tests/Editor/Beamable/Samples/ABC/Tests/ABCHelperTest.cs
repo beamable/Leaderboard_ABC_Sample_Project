@@ -1,3 +1,4 @@
+using Beamable.Samples.Core.Utilities;
 using NUnit.Framework;
 
 namespace Beamable.Samples.ABC
@@ -12,7 +13,7 @@ namespace Beamable.Samples.ABC
             float value = 10.11f;
             
             // Act
-            string result = ABCHelper.GetRoundedTime(value);
+            string result = CoreHelper.GetRoundedTime(value);
             
             // Assert
             Assert.That(result, Is.EqualTo("10.1"));
