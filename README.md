@@ -27,7 +27,7 @@ Button clicks grow trees. Click as many times as possible within
 the time limit. This sample project allows game makers to 
 understand and apply the benefits of the Leaderboard Flow in 
 game development.
-<br>[Leaderboard - Sample Project](https://docs.beamable.com/docs/leaderboard-flow-sample)
+<br>[Leaderboard - Sample Project](https://docs.beamable.com/docs/leaderboard-abc-overview)
 
 ### What is Beamable?
 Beamable is the low-code option for rapidly adding social, 
@@ -38,7 +38,7 @@ Learn how to do that with Beamable's online product documentation.
 ### What is Beamable's "Leaderboard Flow" Feature?
 The purpose of this feature is to allow the player to see the 
 Leaderboard UI which shows a list of highscores by all players of a game.
-<br>[Leaderboard Flow](https://docs.beamable.com/docs/leaderboard-flow)
+<br>[Leaderboard Flow](https://docs.beamable.com/docs/leaderboards-feature-overview)
 
 ### Got feedback?
 Let us know what you think or ask any questions you might have.
