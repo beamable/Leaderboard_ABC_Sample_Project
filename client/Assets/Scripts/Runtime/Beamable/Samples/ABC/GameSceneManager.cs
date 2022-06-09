@@ -39,7 +39,7 @@ namespace Beamable.Samples.ABC
       private Coroutine _runGameCoroutine;
       private float _gameTimeRemaining = 0;
       private LeaderboardContent _leaderboardContent;
-      private IBeamableAPI _beamableAPI = null;
+      private BeamContext _beamContext;
       private GameState _gameState = GameState.PreGame;
 
       /// <summary>
@@ -71,20 +71,16 @@ namespace Beamable.Samples.ABC
       private async void SetupBeamable()
       {
          _leaderboardContent = await _leaderboardRef.Resolve();
-
-         await Beamable.API.Instance.Then(beamableAPI =>
+         _beamContext = BeamContext.Default;
+         await _beamContext.OnReady;
+         try
          {
-            try
-            {
-               _beamableAPI = beamableAPI;
-               RestartGame();
-
-            }
-            catch (Exception)
-            {
-               _gameUIView.StatusText.text = ABCHelper.InternetOfflineInstructionsText;
-            }
-         });
+            RestartGame();
+         }
+         catch (Exception)
+         {
+            _gameUIView.StatusText.text = ABCHelper.InternetOfflineInstructionsText;
+         }
       }
 
 
@@ -154,7 +150,7 @@ namespace Beamable.Samples.ABC
                $" in {gameDuration} seconds!\nCheck the Leaderboard.";
 
             double finalScore = CoreHelper.GetRoundedScore(_currentScoreStatBehaviour.Value);
-            _beamableAPI.LeaderboardService.SetScore(_leaderboardContent.Id, finalScore);
+            _beamContext.Api.LeaderboardService.SetScore(_leaderboardContent.Id, finalScore);
          }
       }
 

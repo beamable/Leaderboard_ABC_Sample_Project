@@ -40,7 +40,7 @@ namespace Beamable.Samples.ABC
       [SerializeField]
       private StatBehaviour _highScoreStatBehaviour = null;
 
-      private IBeamableAPI _beamableAPI = null;
+      private BeamContext _beamContext;
       private bool _isConnected = false;
       private bool _isBeamableSDKInstalled = false;
       private string _isBeamableSDKInstalledErrorMessage = "";
@@ -57,11 +57,8 @@ namespace Beamable.Samples.ABC
 
       protected void OnDestroy()
       {
-         Beamable.API.Instance.Then(beamableAPI =>
-         {
-            _beamableAPI = null;
-            beamableAPI.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
-         });
+         _beamContext.Api.ConnectivityService.OnConnectivityChanged -= ConnectivityService_OnConnectivityChanged;
+         _beamContext.ClearPlayerAndStop();
       }
 
 
@@ -70,40 +67,38 @@ namespace Beamable.Samples.ABC
       /// <summary>
       /// Login with Beamable and fetch user/session information
       /// </summary>
-      private void SetupBeamable()
+      private async void SetupBeamable()
       {
+         _beamContext = BeamContext.Default;
+         await _beamContext.OnReady;
          // Attempt Connection to Beamable
-         Beamable.API.Instance.Then(beamableAPI =>
+         try
          {
-            try
+            _isBeamableSDKInstalled = true;
+
+            // Handle any changes to the internet connectivity
+            _beamContext.Api.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
+            ConnectivityService_OnConnectivityChanged(_beamContext.Api.ConnectivityService.HasConnectivity);
+
+            if (IsDemoMode)
             {
-               _beamableAPI = beamableAPI;
-               _isBeamableSDKInstalled = true;
+               //Set my player's name
+               MockDataCreator.SetCurrentUserAlias(_beamContext.Api.StatsService, "This_is_you:)");
 
-               // Handle any changes to the internet connectivity
-               _beamableAPI.ConnectivityService.OnConnectivityChanged += ConnectivityService_OnConnectivityChanged;
-               ConnectivityService_OnConnectivityChanged(_beamableAPI.ConnectivityService.HasConnectivity);
+               //Populate the leaderboard with at least 10 mock users/scores
+               PopulateLeaderboardWithMockData(_beamContext.Api.LeaderboardService);
 
-               if (IsDemoMode)
-               {
-                  //Set my player's name
-                  MockDataCreator.SetCurrentUserAlias(_beamableAPI.StatsService, "This_is_you:)");
-
-                  //Populate the leaderboard with at least 10 mock users/scores
-                  PopulateLeaderboardWithMockData(_beamableAPI.LeaderboardService);
-
-                  //Set the Beamable stat(s) to have initial values
-                  PopulateStats(_beamableAPI.StatsService, _beamableAPI.LeaderboardService);
-               }
+               //Set the Beamable stat(s) to have initial values
+               PopulateStats(_beamContext.Api.StatsService, _beamContext.Api.LeaderboardService);
             }
-            catch (Exception e)
-            {
-               // Failed to connect (e.g. not logged in)
-               _isBeamableSDKInstalled = false;
-               _isBeamableSDKInstalledErrorMessage = e.Message;
-               ConnectivityService_OnConnectivityChanged(false);
-            }
-         });
+         }
+         catch (Exception e)
+         {
+            // Failed to connect (e.g. not logged in)
+            _isBeamableSDKInstalled = false;
+            _isBeamableSDKInstalledErrorMessage = e.Message;
+            ConnectivityService_OnConnectivityChanged(false);
+         }
       }
 
 
@@ -142,7 +137,7 @@ namespace Beamable.Samples.ABC
       private async void PopulateLeaderboardWithMockData(LeaderboardService leaderboardService)
       {
          LeaderboardContent leaderboardContent = await _leaderboardRef.Resolve();
-         MockDataCreator.PopulateLeaderboardWithMockData(_beamableAPI, leaderboardContent, _configuration);
+         MockDataCreator.PopulateLeaderboardWithMockData(_beamContext.Api, leaderboardContent, _configuration);
       }
 
 
@@ -154,7 +149,7 @@ namespace Beamable.Samples.ABC
          long dbid = 0;
          if (_isConnected)
          {
-            dbid = _beamableAPI.User.id;
+            dbid = _beamContext.PlayerId;
          }
 
          string aboutBodyText = ABCHelper.GetIntroAboutBodyText(
