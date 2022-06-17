@@ -77,9 +77,8 @@ namespace Beamable.Samples.ABC
 
             text += ABCHelper.GetBulletList("Resources", new List<string> 
             {
-               "Overview: <u><link=https://docs.beamable.com/docs/leaderboard-flow-sample>Leaderboard Flow Sample</link></u>",
-               "Feature: <u><link=https://docs.beamable.com/docs/leaderboard-flow>Leaderboard Flow</link></u>",
-               "Feature: <u><link=https://docs.beamable.com/docs/stats>Stats</link></u>"
+               "Overview: <u><link=https://docs.beamable.com/docs/leaderboards-feature-overview>Leaderboard Overview</link></u>",
+               "Feature: <u><link=https://docs.beamable.com/docs/stats-feature-overview>Stats</link></u>"
             });
 
 
