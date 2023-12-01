@@ -9,31 +9,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf7219bab7fe46a1ad266029b2fee19, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a28308e517149c892c97533d4552585, type: 3}
   m_Name: ReadMe
   m_EditorClassIdentifier: 
-  icon: {fileID: 2800000, guid: 92a855754133a48a6b090871e4086dbd, type: 3}
-  title: 'Beamable Sample Project: Leaderboards - A Beamable Clicker (ABC)'
+  icon: {fileID: 2800000, guid: d9139a2683873cb4cb5e86cb4fcf0670, type: 3}
+  title: Microservices ABC Sample Project
   sections:
-  - heading: What is the "A Beamable Clicker" Game?
-    text: Button clicks grow trees. Click as many times as possible within the time limit. This sample project
-      allows game makers to understand and apply the benefits of the Leaderboard Flow in
-      game development.
+  - heading: 'What is "A Beamable Clicker"? '
+    text: 'Button clicks grow trees. Click as many times as possible within the time
+      limit. This sample project allows game makers to understand and apply the benefits
+      of the Leaderboard Flow in game development. '
     linkText: Leaderboard - Sample Project
-    url: https://docs.beamable.com/docs/leaderboard-flow-sample-project
-  - heading: What is Beamable?
-    text: Beamable is the low-code option for rapidly adding social, commerce, and
-      content management features to your live game. Learn how to do that with Beamable's
-      online product documentation.
-    linkText: docs.beamable.com
+    url: https://docs.beamable.com/docs/leaderboard-abc-overview
+  - heading: 'What is Beamable? '
+    text: 'Beamable is the low-code option for rapidly adding social, commerce, and
+      content management features to your live game. Learn how to do that with Beamable''s
+      online product documentation. '
+    linkText: Beamable Docs
     url: https://docs.beamable.com/
-  - heading: What is the Leaderboard Flow?
-    text: The purpose of this feature is to allow the player to see the Leaderboard UI which
-    shows a list of highscores by all players of a game.
+  - heading: 'What is Beamable''s "Leaderboard Flow" Feature? '
+    text: 'The purpose of this feature is to allow the player to see the Leaderboard
+      UI which shows a list of highscores by all players of a game. '
     linkText: Leaderboard Flow
-    url: https://docs.beamable.com/docs/leaderboard-flow
-  - heading: Got feedback?
-    text: Let us know what you think or ask any questions you might have.
+    url: https://docs.beamable.com/docs/leaderboards-feature-overview
+  - heading: 'Got feedback? '
+    text: 'Let us know what you think or ask any questions you might have. '
     linkText: Contact Us
     url: https://docs.beamable.com/discuss
   loadedLayout: 0
